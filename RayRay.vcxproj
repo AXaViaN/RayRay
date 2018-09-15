@@ -28,6 +28,7 @@
     <ClInclude Include="Source\Tool\File.h" />
     <ClInclude Include="Source\Tool\Texture.h" />
     <ClInclude Include="Source\Utility\Color.h" />
+    <ClInclude Include="Source\Utility\Ray.h" />
     <ClInclude Include="Source\Utility\Util.h" />
     <ClInclude Include="Source\Utility\Vector2.h" />
     <ClInclude Include="Source\Utility\Vector3.h" />

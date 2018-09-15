@@ -79,8 +79,7 @@ template<typename T> inline void Vector3<T>::Normalize()
 }
 template<typename T> inline Vector3<T> Vector3<T>::Normalized() const
 {
-	T k = static_cast<T>(1.0) / Length();
-	return *this * k;
+	return *this / Length();
 }
 
 template<typename T> inline T Vector3<T>::operator[](int i) const

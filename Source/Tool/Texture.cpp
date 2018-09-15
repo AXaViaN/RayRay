@@ -29,11 +29,13 @@ Texture::~Texture()
 
 void Texture::SetPixel(const Utility::Vector2<size_t>& position, const Utility::Color& color)
 {
-	m_Data[position.X + position.Y*m_Size.X] = color;
+	size_t inverseY = (m_Size.Y-1) - position.Y;
+	m_Data[position.X + inverseY*m_Size.X] = color;
 }
 Utility::Color Texture::GetPixel(const Utility::Vector2<size_t>& position) const
 {
-	return m_Data[position.X + position.Y*m_Size.X];
+	size_t inverseY = (m_Size.Y-1) - position.Y;
+	return m_Data[position.X + inverseY*m_Size.X];
 }
 
 } // namespace Tool
