@@ -10,6 +10,9 @@ template<typename T> class Vector3
 public:
 	inline Vector3();
 	inline Vector3(T x, T y, T z);
+	static const Vector3 Up;
+	static const Vector3 Right;
+	static const Vector3 Forward;
 
 	inline T Dot(const Vector3& other) const;
 	inline Vector3 Cross(const Vector3& other) const;
@@ -53,6 +56,9 @@ template<typename T> inline Vector3<T>::Vector3(T x, T y, T z) :
 	Z(z)
 {
 }
+template<typename T> const Vector3<T> Vector3<T>::Up = {(T)0.0, (T)1.0, (T)0.0};
+template<typename T> const Vector3<T> Vector3<T>::Right = {(T)1.0, (T)0.0, (T)0.0};
+template<typename T> const Vector3<T> Vector3<T>::Forward = {(T)0.0, (T)0.0, (T)1.0};
 
 template<typename T> inline T Vector3<T>::Dot(const Vector3<T>& other) const
 {
