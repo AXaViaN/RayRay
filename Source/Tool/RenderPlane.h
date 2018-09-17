@@ -8,34 +8,34 @@ namespace Tool {
 class RenderPlane
 {
 public:
-	RenderPlane(Utility::Vector3<float> origin, Utility::Vector3<float> size, float screenRatio);
+	RenderPlane(const Utility::Vector3f& origin, const Utility::Vector3f& size, float screenRatio);
 
-	inline const Utility::Vector3<float>& GetOrigin() const;
-	inline const Utility::Vector3<float>& GetLowerLeft() const;
-	inline const Utility::Vector3<float>& GetHorizontal() const;
-	inline const Utility::Vector3<float>& GetVertical() const;
+	inline const Utility::Vector3f& GetOrigin() const;
+	inline const Utility::Vector3f& GetLowerLeft() const;
+	inline const Utility::Vector3f& GetHorizontal() const;
+	inline const Utility::Vector3f& GetVertical() const;
 
 private:
-	Utility::Vector3<float> m_Origin;
-	Utility::Vector3<float> m_LowerLeftCorner;
-	Utility::Vector3<float> m_Horizontal;
-	Utility::Vector3<float> m_Vertical;
+	Utility::Vector3f m_Origin;
+	Utility::Vector3f m_LowerLeftCorner;
+	Utility::Vector3f m_Horizontal;
+	Utility::Vector3f m_Vertical;
 
 };
 
-inline const Utility::Vector3<float>& RenderPlane::GetOrigin() const
+inline const Utility::Vector3f& RenderPlane::GetOrigin() const
 {
 	return m_Origin;
 }
-inline const Utility::Vector3<float>& RenderPlane::GetLowerLeft() const
+inline const Utility::Vector3f& RenderPlane::GetLowerLeft() const
 {
 	return m_LowerLeftCorner;
 }
-inline const Utility::Vector3<float>& RenderPlane::GetHorizontal() const
+inline const Utility::Vector3f& RenderPlane::GetHorizontal() const
 {
 	return m_Horizontal;
 }
-inline const Utility::Vector3<float>& RenderPlane::GetVertical() const
+inline const Utility::Vector3f& RenderPlane::GetVertical() const
 {
 	return m_Vertical;
 }

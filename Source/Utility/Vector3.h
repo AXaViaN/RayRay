@@ -5,6 +5,9 @@
 
 namespace Utility {
 
+template<typename T> class Vector3;
+using Vector3f = Vector3<float>;
+
 template<typename T> class Vector3
 {
 public:

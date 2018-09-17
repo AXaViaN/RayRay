@@ -1,7 +1,6 @@
 #ifndef TOOL__TEXTURE
 #define TOOL__TEXTURE
 
-#include <Tool/File.h>
 #include <Utility/Color.h>
 #include <Utility/Vector2.h>
 #include <string>
@@ -12,15 +11,15 @@ namespace Tool {
 class Texture
 {
 public:
-	Texture(const std::string& fileName, const Utility::Vector2<size_t>& size);
+	Texture(const std::string& fileName, const Utility::Vector2u& size);
 	~Texture();
 	
-	void SetPixel(const Utility::Vector2<size_t>& position, const Utility::Color& color);
-	Utility::Color GetPixel(const Utility::Vector2<size_t>& position) const;
+	void SetPixel(const Utility::Vector2u& position, const Utility::Color& color);
+	Utility::Color GetPixel(const Utility::Vector2u& position) const;
 
 private:
-	Tool::File m_File;
-	Utility::Vector2<size_t> m_Size;
+	std::string m_FileName;
+	Utility::Vector2u m_Size;
 	std::vector<Utility::Color> m_Data;
 
 };

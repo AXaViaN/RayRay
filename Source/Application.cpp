@@ -7,16 +7,16 @@
 #include <Utility/Ray.h>
 #include <string>
 
-static const std::string OutputFileName = "output.ppm";
-static constexpr Utility::Vector2<size_t> OutputSize = {200, 100};
+static const std::string OutputFileName = "output";
+static constexpr Utility::Vector2u OutputSize = {200, 100};
 
 static Utility::Color GetBackgroundColor(const Utility::Ray& ray)
 {
 	auto direction = ray.GetDirection().Normalized();
 	float t = 0.5f * (direction.Y + 1.0f);
 
-	auto colorVector = Utility::Vector3<float>(0.2f, 0.4f, 0.8f) * t +
-					   Utility::Vector3<float>(1.0f, 1.0f, 1.0f) * (1.0f-t);
+	auto colorVector = Utility::Vector3f(0.2f, 0.4f, 0.8f) * t +
+					   Utility::Vector3f(1.0f, 1.0f, 1.0f) * (1.0f-t);
 
 	return {colorVector.X, colorVector.Y, colorVector.Z};
 }
@@ -67,12 +67,12 @@ int main()
 	scene.SphereList.emplace_back(Entity::Sphere{Utility::Color{1, 0, 0}, { 0, 0, -1}, 0.5f});
 
 	// Traverse from lower-left
-	Utility::Vector2<size_t> position;
+	Utility::Vector2u position;
 	for( position.Y=0 ; position.Y<OutputSize.Y ; ++position.Y )
 	{
 		for( position.X=0 ; position.X<OutputSize.X ; ++position.X )
 		{
-			Utility::Vector2<float> uv = {
+			Utility::Vector2f uv = {
 				float(position.X) / float(OutputSize.X),
 				float(position.Y) / float(OutputSize.Y)
 			};

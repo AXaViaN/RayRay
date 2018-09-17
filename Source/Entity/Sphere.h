@@ -10,7 +10,7 @@ struct Sphere
 {
 	Utility::Color Color;
 
-	Utility::Vector3<float> Center;
+	Utility::Vector3f Center;
 	float Radius = 1.0f;
 };
 
