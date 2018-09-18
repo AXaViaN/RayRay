@@ -36,6 +36,9 @@
     <ClCompile Include="Source\Entity\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entity\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\Util.h">
@@ -68,10 +71,13 @@
     <ClInclude Include="Source\Entity\SceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\Ray.h">
+    <ClInclude Include="Source\Utility\HitResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\HitResult.h">
+    <ClInclude Include="Source\Tool\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

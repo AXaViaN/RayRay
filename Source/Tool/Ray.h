@@ -1,9 +1,9 @@
-#ifndef UTILITY__RAY
-#define UTILITY__RAY
+#ifndef TOOL__RAY
+#define TOOL__RAY
 
 #include <Utility/Vector3.h>
 
-namespace Utility {
+namespace Tool {
 
 class Ray
 {
@@ -39,6 +39,6 @@ inline Utility::Vector3f Ray::GetPoint(float t) const
 	return m_Origin + m_Direction*t;
 }
 
-} // namespace Utility
+} // namespace Tool
 
-#endif // UTILITY__RAY
+#endif // TOOL__RAY

@@ -10,10 +10,10 @@ class Sphere : public Entity::SceneObject
 public:
 	inline Sphere(const Utility::Color& color, const Utility::Vector3f& center, float radius);
 
-	virtual Utility::HitResult HitCheck(const Utility::Ray& ray, float minT, float maxT) const override;
+	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const override;
 
 private:
-	void TestHitResult(Utility::HitResult& hitResult, const Utility::Ray& ray, float minT, float maxT) const;
+	void TestHitResult(Utility::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const;
 
 	Utility::Vector3f m_Center;
 	float m_Radius = 1.0f;

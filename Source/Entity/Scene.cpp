@@ -2,7 +2,7 @@
 
 namespace Entity {
 
-Utility::HitResult Scene::HitCheck(const Utility::Ray& ray, float minT, float maxT) const
+Utility::HitResult Scene::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
 {
 	Utility::HitResult bestHitResult;
 	bestHitResult.T = maxT;

@@ -1,17 +1,17 @@
 #include <Entity/Scene.h>
+#include <Entity/Camera.h>
 #include <Entity/Sphere.h>
+#include <Tool/Ray.h>
 #include <Tool/Texture.h>
-#include <Tool/RenderPlane.h>
 #include <Utility/Color.h>
 #include <Utility/Vector2.h>
 #include <Utility/Vector3.h>
-#include <Utility/Ray.h>
 #include <string>
 
 static const std::string OutputFileName = "output";
 static constexpr Utility::Vector2u OutputSize = {200, 100};
 
-static Utility::Color GetBackgroundColor(const Utility::Ray& ray)
+static Utility::Color GetBackgroundColor(const Tool::Ray& ray)
 {
 	auto direction = ray.GetDirection().Normalized();
 	float t = 0.5f * (direction.Y + 1.0f);
@@ -22,7 +22,7 @@ static Utility::Color GetBackgroundColor(const Utility::Ray& ray)
 	return {colorVector.X, colorVector.Y, colorVector.Z};
 }
 
-static Utility::Color GetColor(const Entity::Scene& scene, const Utility::Ray& ray)
+static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray)
 {
 	auto hitResult = scene.HitCheck(ray, 0.0f, std::numeric_limits<float>::max());
 	if(hitResult.IsHit)
@@ -45,8 +45,8 @@ int main()
 	// Setup texture output
 	Tool::Texture output(OutputFileName, OutputSize);
 	
-	// Setup render plane
-	Tool::RenderPlane renderPlane({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, OutputSize.X/(float)OutputSize.Y);
+	// Setup camera
+	Entity::Camera camera({0.0f, 0.0f, 0.0f}, OutputSize.X/(float)OutputSize.Y);
 
 	// Setup scene
 	Entity::Scene scene;
@@ -64,11 +64,7 @@ int main()
 				float(position.Y) / float(OutputSize.Y)
 			};
 
-			auto rayHead = renderPlane.GetLowerLeft() + 
-						   renderPlane.GetHorizontal()*uv.X + renderPlane.GetVertical()*uv.Y;
-			auto rayDirection = rayHead - renderPlane.GetOrigin();
-
-			Utility::Ray ray(renderPlane.GetOrigin(), rayDirection);
+			Tool::Ray ray = camera.GetRay(uv);
 			Utility::Color color = GetColor(scene, ray);
 
 			output.SetPixel(position, color);

@@ -10,7 +10,7 @@ namespace Entity {
 class Scene : public Entity::SceneObject
 {
 public:
-	virtual Utility::HitResult HitCheck(const Utility::Ray& ray, float minT, float maxT) const override;
+	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const override;
 
 	template<typename T> inline void AddSceneObject(const T& object);
 

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Entity\Camera.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
     <ClCompile Include="Source\Tool\RenderPlane.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="Source\Utility\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Entity\Camera.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />
     <ClInclude Include="Source\Entity\Sphere.h" />
@@ -36,7 +38,7 @@
     <ClInclude Include="Source\Tool\Texture.h" />
     <ClInclude Include="Source\Utility\Color.h" />
     <ClInclude Include="Source\Utility\HitResult.h" />
-    <ClInclude Include="Source\Utility\Ray.h" />
+    <ClInclude Include="Source\Tool\Ray.h" />
     <ClInclude Include="Source\Utility\Util.h" />
     <ClInclude Include="Source\Utility\Vector2.h" />
     <ClInclude Include="Source\Utility\Vector3.h" />

@@ -2,7 +2,7 @@
 
 namespace Entity {
 
-Utility::HitResult Sphere::HitCheck(const Utility::Ray& ray, float minT, float maxT) const
+Utility::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
 {
 	Utility::HitResult hitResult;
 	hitResult.Object = this;
@@ -41,7 +41,7 @@ Utility::HitResult Sphere::HitCheck(const Utility::Ray& ray, float minT, float m
 	return hitResult;
 }
 
-void Sphere::TestHitResult(Utility::HitResult& hitResult, const Utility::Ray& ray, float minT, float maxT) const
+void Sphere::TestHitResult(Utility::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const
 {
 	if(hitResult.T < maxT && 
 	   hitResult.T > minT)
