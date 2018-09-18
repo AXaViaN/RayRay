@@ -1,18 +1,31 @@
 #ifndef ENTITY__SPHERE
 #define ENTITY__SPHERE
 
-#include <Utility/Vector3.h>
-#include <Utility/Color.h>
+#include <Entity/SceneObject.h>
 
 namespace Entity {
 
-struct Sphere
+class Sphere : public Entity::SceneObject
 {
-	Utility::Color Color;
+public:
+	inline Sphere(const Utility::Color& color, const Utility::Vector3f& center, float radius);
 
-	Utility::Vector3f Center;
-	float Radius = 1.0f;
+	virtual Utility::HitResult HitCheck(const Utility::Ray& ray, float minT, float maxT) const override;
+
+private:
+	void TestHitResult(Utility::HitResult& hitResult, const Utility::Ray& ray, float minT, float maxT) const;
+
+	Utility::Vector3f m_Center;
+	float m_Radius = 1.0f;
+
 };
+
+inline Sphere::Sphere(const Utility::Color& color, const Utility::Vector3f& center, float radius) : 
+	m_Center(center),
+	m_Radius(radius)
+{
+	Color = color;
+}
 
 } // namespace Entity
 

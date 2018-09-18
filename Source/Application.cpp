@@ -1,4 +1,5 @@
 #include <Entity/Scene.h>
+#include <Entity/Sphere.h>
 #include <Tool/Texture.h>
 #include <Tool/RenderPlane.h>
 #include <Utility/Color.h>
@@ -21,36 +22,21 @@ static Utility::Color GetBackgroundColor(const Utility::Ray& ray)
 	return {colorVector.X, colorVector.Y, colorVector.Z};
 }
 
-static bool HitDetect(const Utility::Ray& ray, const Entity::Sphere& sphere)
-{
-	// If we want to check a point is on the sphere we can use: |P-C|=R
-	// where P is the point, C is the sphere center, R is the sphere radius.
-	// It can also be represented as (P-C)*(P-C)=R^2 where * means dot product.
-	// When checking with a ray it becomes (P(t)-C)*(P(t)-C)=R^2
-	// P(t)=S+Dt so it becomes (S+Dt-C)*(S+Dt-C)=R^2
-	// Expand -> u=Dt, v=S-C -> (u+v)*(u+v)=R^2 -> u^2+2uv+v^2=R^2
-	// Final version is t^2(D*D)+t(2D*(P-C))+(P-C)*(P-C)=R^2
-	// Only variable thing is t. So it is a quadratic equation.
-	// discriminant>0 means 2 intersection, discriminant=0 means 1, discriminant<0 means none
-
-	auto sphereToRay = ray.GetOrigin() - sphere.Center;
-	float a = ray.GetDirection().Dot(ray.GetDirection());
-	float b = 2.0f * ray.GetDirection().Dot(sphereToRay);
-	float c = sphereToRay.Dot(sphereToRay) - sphere.Radius*sphere.Radius;
-	float discriminant = b*b - 4*a*c;
-	return (discriminant > 0);
-}
-
 static Utility::Color GetColor(const Entity::Scene& scene, const Utility::Ray& ray)
 {
-	for( auto& sphere : scene.SphereList )
+	auto hitResult = scene.HitCheck(ray, 0.0f, std::numeric_limits<float>::max());
+	if(hitResult.IsHit)
 	{
-		if(HitDetect(ray, sphere))
-		{
-			return sphere.Color;
-		}
+		// Render normals for testing
+		Utility::Vector3f normal = hitResult.Normal;
+
+		// [-1,+1] -> [0,1]
+		normal += {1, 1, 1};
+		normal /= 2;
+
+		return {normal.X, normal.Y, normal.Z};
 	}
-	
+
 	return GetBackgroundColor(ray);
 }
 
@@ -64,7 +50,8 @@ int main()
 
 	// Setup scene
 	Entity::Scene scene;
-	scene.SphereList.emplace_back(Entity::Sphere{Utility::Color{1, 0, 0}, { 0, 0, -1}, 0.5f});
+	scene.AddSceneObject(Entity::Sphere(Utility::Color{1, 0, 0}, {0, 0, -1}, 0.5f));
+	scene.AddSceneObject(Entity::Sphere(Utility::Color{0, 1, 0}, {0, -100.5f, -1}, 100.0f));
 
 	// Traverse from lower-left
 	Utility::Vector2u position;
