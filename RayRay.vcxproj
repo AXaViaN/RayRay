@@ -39,6 +39,7 @@
     <ClInclude Include="Source\Utility\Color.h" />
     <ClInclude Include="Source\Utility\HitResult.h" />
     <ClInclude Include="Source\Tool\Ray.h" />
+    <ClInclude Include="Source\Utility\Random.h" />
     <ClInclude Include="Source\Utility\Util.h" />
     <ClInclude Include="Source\Utility\Vector2.h" />
     <ClInclude Include="Source\Utility\Vector3.h" />

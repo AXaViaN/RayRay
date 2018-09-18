@@ -6,10 +6,12 @@
 #include <Utility/Color.h>
 #include <Utility/Vector2.h>
 #include <Utility/Vector3.h>
+#include <Utility/Random.h>
 #include <string>
 
 static const std::string OutputFileName = "output";
 static constexpr Utility::Vector2u OutputSize = {200, 100};
+static constexpr size_t AntialiasingSampleCount = 100;
 
 static Utility::Color GetBackgroundColor(const Tool::Ray& ray)
 {
@@ -53,21 +55,30 @@ int main()
 	scene.AddSceneObject(Entity::Sphere(Utility::Color{1, 0, 0}, {0, 0, -1}, 0.5f));
 	scene.AddSceneObject(Entity::Sphere(Utility::Color{0, 1, 0}, {0, -100.5f, -1}, 100.0f));
 
+	Utility::Random random;
+
 	// Traverse from lower-left
 	Utility::Vector2u position;
 	for( position.Y=0 ; position.Y<OutputSize.Y ; ++position.Y )
 	{
 		for( position.X=0 ; position.X<OutputSize.X ; ++position.X )
 		{
-			Utility::Vector2f uv = {
-				float(position.X) / float(OutputSize.X),
-				float(position.Y) / float(OutputSize.Y)
-			};
+			Utility::Vector3f colorVector;
+			for( size_t i=0 ; i<AntialiasingSampleCount ; ++i )
+			{
+				Utility::Vector2f uv = {
+					float(position.X + random.GetFloat()) / float(OutputSize.X),
+					float(position.Y + random.GetFloat()) / float(OutputSize.Y)
+				};
 
-			Tool::Ray ray = camera.GetRay(uv);
-			Utility::Color color = GetColor(scene, ray);
+				Tool::Ray ray = camera.GetRay(uv);
+				Utility::Color color = GetColor(scene, ray);
 
-			output.SetPixel(position, color);
+				colorVector += {color.R, color.G, color.B};
+			}
+			colorVector /= static_cast<float>(AntialiasingSampleCount);
+
+			output.SetPixel(position, {colorVector.X, colorVector.Y, colorVector.Z});
 		}
 	}
 
