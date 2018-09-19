@@ -11,14 +11,14 @@ namespace Tool {
 class Texture
 {
 public:
-	Texture(const std::string& fileName, const Utility::Vector2u& size);
-	~Texture();
-	
+	Texture(const Utility::Vector2u& size);
+
+	void Save(const std::string& fileName);
+
 	void SetPixel(const Utility::Vector2u& position, const Utility::Color& color);
 	Utility::Color GetPixel(const Utility::Vector2u& position) const;
 
 private:
-	std::string m_FileName;
 	Utility::Vector2u m_Size;
 	std::vector<Utility::Color> m_Data;
 

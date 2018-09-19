@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
+    <ClCompile Include="Source\Entity\Renderer.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
     <ClCompile Include="Source\Tool\RenderPlane.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Entity\Camera.h" />
+    <ClInclude Include="Source\Entity\Renderer.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />
     <ClInclude Include="Source\Entity\Sphere.h" />

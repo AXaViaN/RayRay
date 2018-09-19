@@ -4,13 +4,13 @@
 
 namespace Tool {
 
-Texture::Texture(const std::string& fileName, const Utility::Vector2u& size) : 
-	m_FileName(fileName+".png"),
+Texture::Texture(const Utility::Vector2u& size) : 
 	m_Size(size),
 	m_Data(m_Size.X * m_Size.Y, Utility::Color())
 {
 }
-Texture::~Texture()
+
+void Texture::Save(const std::string& fileName)
 {
 	static size_t ColorChannel = 3;
 
@@ -23,7 +23,7 @@ Texture::~Texture()
 		writeData.emplace_back(unsigned char(255.99f * color.B));
 	}
 
-	stbi_write_png(m_FileName.c_str(), m_Size.X, m_Size.Y, ColorChannel, writeData.data(), 0);
+	stbi_write_png((fileName+".png").c_str(), m_Size.X, m_Size.Y, ColorChannel, writeData.data(), 0);
 }
 
 void Texture::SetPixel(const Utility::Vector2u& position, const Utility::Color& color)
