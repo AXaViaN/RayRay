@@ -8,7 +8,7 @@ namespace Entity {
 class Sphere : public Entity::SceneObject
 {
 public:
-	inline Sphere(const Utility::Color& color, const Utility::Vector3f& center, float radius);
+	inline Sphere(const Utility::Color& color, float absorption, const Utility::Vector3f& center, float radius);
 
 	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const override;
 
@@ -20,11 +20,12 @@ private:
 
 };
 
-inline Sphere::Sphere(const Utility::Color& color, const Utility::Vector3f& center, float radius) : 
+inline Sphere::Sphere(const Utility::Color& color, float absorption, const Utility::Vector3f& center, float radius) : 
 	m_Center(center),
 	m_Radius(radius)
 {
 	Color = color;
+	Absorption = absorption;
 }
 
 } // namespace Entity

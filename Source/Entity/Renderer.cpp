@@ -1,10 +1,13 @@
 #include <Entity/Renderer.h>
 #include <Tool/Ray.h>
 #include <Utility/Vector3.h>
+#include <Utility/Random.h>
 #include <thread>
 #include <mutex>
 
 namespace Entity {
+
+static Utility::Random s_Random;
 
 struct SampleData
 {
@@ -18,7 +21,8 @@ struct SampleData
 	Utility::Vector2f UVOffset;
 };
 
-static void GetSampleTexture(const SampleData& sampleData);
+static void GetSampleTexture(const SampleData& data);
+static Utility::Vector3f GetRandomVectorInUnitSphere();
 static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray);
 static Utility::Color GetBackgroundColor(const Tool::Ray& ray);
 
@@ -85,50 +89,69 @@ Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Ca
 	return output;
 }
 
-static void GetSampleTexture(const SampleData& sampleData)
+static void GetSampleTexture(const SampleData& data)
 {
-	Tool::Texture sample(sampleData.TextureSize);
+	Tool::Texture sample(data.TextureSize);
 
 	// Traverse from lower-left
 	Utility::Vector2u position;
-	for( position.Y=0 ; position.Y<sampleData.TextureSize.Y ; ++position.Y )
+	for( position.Y=0 ; position.Y<data.TextureSize.Y ; ++position.Y )
 	{
-		for( position.X=0 ; position.X<sampleData.TextureSize.X ; ++position.X )
+		for( position.X=0 ; position.X<data.TextureSize.X ; ++position.X )
 		{
 			Utility::Vector2f uv = {
-				float(position.X + sampleData.UVOffset.X) / float(sampleData.TextureSize.X),
-				float(position.Y + sampleData.UVOffset.Y) / float(sampleData.TextureSize.Y)
+				float(position.X + data.UVOffset.X) / float(data.TextureSize.X),
+				float(position.Y + data.UVOffset.Y) / float(data.TextureSize.Y)
 			};
 
-			Tool::Ray ray = sampleData.Camera.GetRay(uv);
-			Utility::Color color = GetColor(sampleData.Scene, ray);
+			Tool::Ray ray = data.Camera.GetRay(uv);
+			Utility::Color color = GetColor(data.Scene, ray);
 
 			sample.SetPixel(position, color);
 		}
 	}
 
-	std::unique_lock<std::mutex> lock(sampleData.SampleMutex);
-	sampleData.SampleTextures.emplace_back(sample);
+	std::unique_lock<std::mutex> lock(data.SampleMutex);
+	data.SampleTextures.emplace_back(sample);
 }
 
+static Utility::Vector3f GetRandomVectorInUnitSphere()
+{
+	Utility::Vector3f point = {1.0f, 1.0f, 1.0f};
+	while(point.SquaredLength() >= 1.0f)
+	{
+		// Random vector
+		point = {s_Random.GetFloat(), s_Random.GetFloat(), s_Random.GetFloat()};
+		// [0,1) -> (-1,+1)
+		point = (point * 2.0f) - Utility::Vector3f{1.0f, 1.0f, 1.0f};
+	}
+	return point;
+}
 static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray)
 {
-	auto hitResult = scene.HitCheck(ray, 0.0f, std::numeric_limits<float>::max());
+	auto hitResult = scene.HitCheck(ray, 0.001f, std::numeric_limits<float>::max());
 	if(hitResult.IsHit)
 	{
-		// Render normals for testing
-		Utility::Vector3f normal = hitResult.Normal;
+		// Select a random reflection direction
+		auto target = hitResult.Point + hitResult.Normal + GetRandomVectorInUnitSphere();
+		auto targetDirection = (target - hitResult.Point).Normalized();
 
-		// [-1,+1] -> [0,1]
-		normal += {1, 1, 1};
-		normal /= 2;
+		// Get reflection color
+		auto reflectedRay = Tool::Ray(hitResult.Point, targetDirection);
+		auto reflectionColor = GetColor(scene, reflectedRay);
 
-		return {normal.X, normal.Y, normal.Z};
+		// Combine colors
+		Utility::Color color = {
+			hitResult.Object->Color.R * reflectionColor.R * (1.0f - hitResult.Object->Absorption),
+			hitResult.Object->Color.G * reflectionColor.G * (1.0f - hitResult.Object->Absorption),
+			hitResult.Object->Color.B * reflectionColor.B * (1.0f - hitResult.Object->Absorption)
+		};
+
+		return color;
 	}
 
 	return GetBackgroundColor(ray);
 }
-
 static Utility::Color GetBackgroundColor(const Tool::Ray& ray)
 {
 	auto direction = ray.GetDirection().Normalized();

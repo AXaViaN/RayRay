@@ -13,7 +13,7 @@ class Texture
 public:
 	Texture(const Utility::Vector2u& size);
 
-	void Save(const std::string& fileName);
+	void Save(const std::string& fileName, float gamma=2.0f);
 
 	void SetPixel(const Utility::Vector2u& position, const Utility::Color& color);
 	Utility::Color GetPixel(const Utility::Vector2u& position) const;

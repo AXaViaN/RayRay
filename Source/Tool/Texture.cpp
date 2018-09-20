@@ -10,7 +10,7 @@ Texture::Texture(const Utility::Vector2u& size) :
 {
 }
 
-void Texture::Save(const std::string& fileName)
+void Texture::Save(const std::string& fileName, float gamma)
 {
 	static size_t ColorChannel = 3;
 
@@ -18,6 +18,11 @@ void Texture::Save(const std::string& fileName)
 	writeData.reserve(m_Size.X * m_Size.Y * ColorChannel);
 	for( auto& color : m_Data )
 	{
+		// Gamma correction
+		color = {std::powf(color.R, 1.0f/gamma), 
+				 std::powf(color.G, 1.0f/gamma),
+				 std::powf(color.B, 1.0f/gamma)};
+
 		writeData.emplace_back(unsigned char(255.99f * color.R));
 		writeData.emplace_back(unsigned char(255.99f * color.G));
 		writeData.emplace_back(unsigned char(255.99f * color.B));

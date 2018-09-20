@@ -18,8 +18,8 @@ int main()
 
 	// Setup scene
 	Entity::Scene scene;
-	scene.AddSceneObject(Entity::Sphere(Utility::Color{1, 0, 0}, {0, 0, -1}, 0.5f));
-	scene.AddSceneObject(Entity::Sphere(Utility::Color{0, 1, 0}, {0, -100.5f, -1}, 100.0f));
+	scene.AddSceneObject(Entity::Sphere(Utility::Color{1, 0, 0}, 0.0f, {0, 0, -1}, 0.5f));
+	scene.AddSceneObject(Entity::Sphere(Utility::Color{0, 1, 0}, 0.0f, {0, -100.5f, -1}, 100.0f));
 
 	// Render
 	Entity::Renderer renderer(OutputSize, AASampleCount);

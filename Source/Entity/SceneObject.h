@@ -14,6 +14,7 @@ public:
 
 public:
 	Utility::Color Color;
+	float Absorption = 0.0f;
 
 };
 
