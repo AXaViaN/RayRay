@@ -12,7 +12,7 @@ Texture::Texture(const Utility::Vector2u& size) :
 
 void Texture::Save(const std::string& fileName, float gamma)
 {
-	static size_t ColorChannel = 3;
+	static int ColorChannel = 3;
 
 	std::vector<unsigned char> writeData;
 	writeData.reserve(m_Size.X * m_Size.Y * ColorChannel);

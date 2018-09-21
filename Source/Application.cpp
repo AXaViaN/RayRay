@@ -9,7 +9,7 @@
 
 static const std::string OutputFileName = "output";
 static constexpr Utility::Vector2u OutputSize = {200, 100};
-static constexpr size_t AASampleCount = 16;
+static constexpr size_t AASampleCount = 128;
 
 int main()
 {

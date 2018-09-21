@@ -35,15 +35,17 @@ Renderer::Renderer(const Utility::Vector2u& outputSize, size_t aaSampleCount) :
 Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Camera& camera) const
 {
 	Utility::Vector2u aaSampleSize;
-	aaSampleSize.X = (size_t)std::sqrtf((float)m_AASampleCount);
-	aaSampleSize.Y = (size_t)(m_AASampleCount / aaSampleSize.X);
+	aaSampleSize.X = (unsigned int)std::sqrtf((float)m_AASampleCount);
+	aaSampleSize.Y = (unsigned int)(m_AASampleCount / aaSampleSize.X);
 	size_t aaSampleCount = aaSampleSize.X * aaSampleSize.Y;
 
 	std::vector<Tool::Texture> sampleTextures;
 	std::mutex sampleMutex;
 
 	// Get samples
-	std::vector<std::thread> threads;
+	constexpr size_t ThreadCount = 5;
+	std::thread threads[ThreadCount];
+	size_t threadIdx = 0;
 	SampleData sampleData = {scene, camera, sampleTextures, sampleMutex, m_OutputSize};
 	Utility::Vector2u aaSample;
 	for( aaSample.Y=0 ; aaSample.Y<aaSampleSize.Y ; ++aaSample.Y )
@@ -55,12 +57,24 @@ Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Ca
 				float(aaSample.Y) / float(aaSampleSize.Y)
 			};
 
-			threads.emplace_back(GetSampleTexture, sampleData);
+			if(threadIdx >= ThreadCount)
+			{
+				threadIdx = 0;
+			}
+			if(threads[threadIdx].joinable())
+			{
+				threads[threadIdx].join();
+			}
+
+			threads[threadIdx++] = std::thread(GetSampleTexture, sampleData);
 		}
 	}
 	for( auto& thread : threads )
 	{
-		thread.join();
+		if(thread.joinable())
+		{
+			thread.join();
+		}
 	}
 
 	// Avarage samples
