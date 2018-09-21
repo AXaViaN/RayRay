@@ -1,6 +1,7 @@
 #ifndef UTILITY__UTIL
 #define UTILITY__UTIL
 
+#include <Utility/Vector3.h>
 #include <string>
 
 #if defined(_WIN32) || defined(WIN32)
@@ -10,6 +11,8 @@
 #endif
 
 namespace Utility {
+
+Utility::Vector3f GetRandomVectorInUnitSphere();
 
 std::string ReadLine();
 

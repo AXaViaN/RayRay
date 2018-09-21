@@ -1,4 +1,5 @@
 #include <Utility/Util.h>
+#include <Utility/Random.h>
 #include <cstdio>
 #include <utility>
 #include <malloc.h>
@@ -9,6 +10,21 @@
 #endif
 
 namespace Utility {
+
+Utility::Vector3f GetRandomVectorInUnitSphere()
+{
+	static Utility::Random random;
+
+	Utility::Vector3f point = {1.0f, 1.0f, 1.0f};
+	while(point.SquaredLength() >= 1.0f)
+	{
+		// Random vector
+		point = {random.GetFloat(), random.GetFloat(), random.GetFloat()};
+		// [0,1) -> (-1,+1)
+		point = (point * 2.0f) - Utility::Vector3f{1.0f, 1.0f, 1.0f};
+	}
+	return point;
+}
 
 std::string ReadLine()
 {

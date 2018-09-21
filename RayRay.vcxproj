@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
+    <ClCompile Include="Source\Entity\LambertianMaterial.cpp" />
     <ClCompile Include="Source\Entity\Renderer.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
@@ -31,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Entity\Camera.h" />
+    <ClInclude Include="Source\Entity\LambertianMaterial.h" />
+    <ClInclude Include="Source\Entity\Material.h" />
     <ClInclude Include="Source\Entity\Renderer.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />
@@ -42,6 +45,7 @@
     <ClInclude Include="Source\Utility\HitResult.h" />
     <ClInclude Include="Source\Tool\Ray.h" />
     <ClInclude Include="Source\Utility\Random.h" />
+    <ClInclude Include="Source\Utility\ScatterResult.h" />
     <ClInclude Include="Source\Utility\Util.h" />
     <ClInclude Include="Source\Utility\Vector2.h" />
     <ClInclude Include="Source\Utility\Vector3.h" />

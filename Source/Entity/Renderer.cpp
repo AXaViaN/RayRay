@@ -13,6 +13,7 @@ struct SampleData
 {
 	const Entity::Scene& Scene;
 	const Entity::Camera& Camera;
+	const size_t ScatterDepth;
 
 	std::vector<Tool::Texture>& SampleTextures;
 	std::mutex& SampleMutex;
@@ -22,8 +23,7 @@ struct SampleData
 };
 
 static void GetSampleTexture(const SampleData& data);
-static Utility::Vector3f GetRandomVectorInUnitSphere();
-static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray);
+static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, size_t scatterDepth);
 static Utility::Color GetBackgroundColor(const Tool::Ray& ray);
 
 Renderer::Renderer(const Utility::Vector2u& outputSize, size_t aaSampleCount) : 
@@ -32,7 +32,7 @@ Renderer::Renderer(const Utility::Vector2u& outputSize, size_t aaSampleCount) :
 {
 }
 
-Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Camera& camera) const
+Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Camera& camera, size_t scatterDepth) const
 {
 	Utility::Vector2u aaSampleSize;
 	aaSampleSize.X = (unsigned int)std::sqrtf((float)m_AASampleCount);
@@ -46,7 +46,7 @@ Tool::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Ca
 	constexpr size_t ThreadCount = 5;
 	std::thread threads[ThreadCount];
 	size_t threadIdx = 0;
-	SampleData sampleData = {scene, camera, sampleTextures, sampleMutex, m_OutputSize};
+	SampleData sampleData = {scene, camera, scatterDepth, sampleTextures, sampleMutex, m_OutputSize};
 	Utility::Vector2u aaSample;
 	for( aaSample.Y=0 ; aaSample.Y<aaSampleSize.Y ; ++aaSample.Y )
 	{
@@ -119,7 +119,7 @@ static void GetSampleTexture(const SampleData& data)
 			};
 
 			Tool::Ray ray = data.Camera.GetRay(uv);
-			Utility::Color color = GetColor(data.Scene, ray);
+			Utility::Color color = GetColor(data.Scene, ray, data.ScatterDepth);
 
 			sample.SetPixel(position, color);
 		}
@@ -129,37 +129,27 @@ static void GetSampleTexture(const SampleData& data)
 	data.SampleTextures.emplace_back(sample);
 }
 
-static Utility::Vector3f GetRandomVectorInUnitSphere()
+static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, size_t scatterDepth)
 {
-	Utility::Vector3f point = {1.0f, 1.0f, 1.0f};
-	while(point.SquaredLength() >= 1.0f)
-	{
-		// Random vector
-		point = {s_Random.GetFloat(), s_Random.GetFloat(), s_Random.GetFloat()};
-		// [0,1) -> (-1,+1)
-		point = (point * 2.0f) - Utility::Vector3f{1.0f, 1.0f, 1.0f};
-	}
-	return point;
-}
-static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray)
-{
+	// Hit the ray to a scene object
 	auto hitResult = scene.HitCheck(ray, 0.001f, std::numeric_limits<float>::max());
 	if(hitResult.IsHit)
 	{
-		// Select a random reflection direction
-		auto target = hitResult.Point + hitResult.Normal + GetRandomVectorInUnitSphere();
-		auto targetDirection = (target - hitResult.Point).Normalized();
+		Utility::Color color;
+		if(hitResult.Object->Material != nullptr &&
+		   scatterDepth > 0)
+		{
+			// Scatter from the object
+			auto scatterResult = hitResult.Object->Material->ScatterCheck(ray, hitResult);
+			if(scatterResult.IsScatter)
+			{
+				auto reflectedColor = GetColor(scene, scatterResult.ReflectionRay, scatterDepth-1);
 
-		// Get reflection color
-		auto reflectedRay = Tool::Ray(hitResult.Point, targetDirection);
-		auto reflectionColor = GetColor(scene, reflectedRay);
-
-		// Combine colors
-		Utility::Color color = {
-			hitResult.Object->Color.R * reflectionColor.R * (1.0f - hitResult.Object->Absorption),
-			hitResult.Object->Color.G * reflectionColor.G * (1.0f - hitResult.Object->Absorption),
-			hitResult.Object->Color.B * reflectionColor.B * (1.0f - hitResult.Object->Absorption)
-		};
+				color = {scatterResult.Color.R * reflectedColor.R,
+						 scatterResult.Color.G * reflectedColor.G,
+						 scatterResult.Color.B * reflectedColor.B};
+			}
+		}
 
 		return color;
 	}
@@ -172,7 +162,7 @@ static Utility::Color GetBackgroundColor(const Tool::Ray& ray)
 	float t = 0.5f * (direction.Y + 1.0f);
 
 	auto colorVector = Utility::Vector3f(0.2f, 0.4f, 0.8f) * t +
-		Utility::Vector3f(1.0f, 1.0f, 1.0f) * (1.0f-t);
+					   Utility::Vector3f(1.0f, 1.0f, 1.0f) * (1.0f-t);
 
 	return {colorVector.X, colorVector.Y, colorVector.Z};
 }

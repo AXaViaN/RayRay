@@ -12,7 +12,7 @@ class Renderer
 public:
 	Renderer(const Utility::Vector2u& outputSize, size_t aaSampleCount);
 
-	Tool::Texture RenderScene(const Entity::Scene& scene, const Entity::Camera& camera) const;
+	Tool::Texture RenderScene(const Entity::Scene& scene, const Entity::Camera& camera, size_t scatterDepth=50) const;
 
 private:
 	Utility::Vector2u m_OutputSize;

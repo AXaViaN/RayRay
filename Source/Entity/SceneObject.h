@@ -1,9 +1,11 @@
 #ifndef ENTITY__SCENE_OBJECT
 #define ENTITY__SCENE_OBJECT
 
+#include <Entity/Material.h>
 #include <Tool/Ray.h>
 #include <Utility/Color.h>
 #include <Utility/HitResult.h>
+#include <memory>
 
 namespace Entity {
 
@@ -13,8 +15,7 @@ public:
 	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const = 0;
 
 public:
-	Utility::Color Color;
-	float Absorption = 0.0f;
+	std::unique_ptr<Entity::Material> Material;
 
 };
 

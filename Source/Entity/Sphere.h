@@ -2,13 +2,14 @@
 #define ENTITY__SPHERE
 
 #include <Entity/SceneObject.h>
+#include <Entity/Material.h>
 
 namespace Entity {
 
 class Sphere : public Entity::SceneObject
 {
 public:
-	inline Sphere(const Utility::Color& color, float absorption, const Utility::Vector3f& center, float radius);
+	inline Sphere(const Utility::Vector3f& center, float radius, std::unique_ptr<Entity::Material>&& material);
 
 	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const override;
 
@@ -20,12 +21,11 @@ private:
 
 };
 
-inline Sphere::Sphere(const Utility::Color& color, float absorption, const Utility::Vector3f& center, float radius) : 
+inline Sphere::Sphere(const Utility::Vector3f& center, float radius, std::unique_ptr<Entity::Material>&& material) : 
 	m_Center(center),
 	m_Radius(radius)
 {
-	Color = color;
-	Absorption = absorption;
+	Material = std::move(material);
 }
 
 } // namespace Entity
