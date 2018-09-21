@@ -3,6 +3,7 @@
 #include <Entity/Renderer.h>
 #include <Entity/Sphere.h>
 #include <Entity/LambertianMaterial.h>
+#include <Entity/MetalMaterial.h>
 #include <Tool/Texture.h>
 #include <Utility/Color.h>
 #include <Utility/Vector2.h>
@@ -23,18 +24,31 @@ int main()
 		Utility::Vector3f position;
 		float radius;
 		Entity::LambertianMaterial lambertianMaterial({});
+		Entity::MetalMaterial metalMaterial({}, 0);
 
-		position = {0, -100.5f, -1};
+		position = {0.0f, -100.5f, -1.0f};
 		radius = 100.0f;
-		lambertianMaterial = Entity::LambertianMaterial(Utility::Color{0.05f, 1.00f, 0.05f});
+		lambertianMaterial = Entity::LambertianMaterial(Utility::Color{0.8f, 0.8f, 0.0f});
 		scene.AddSceneObject(Entity::Sphere(position, radius, 
 											std::make_unique<Entity::LambertianMaterial>(lambertianMaterial)));
 
-		position = {0, 0, -1};
+		position = {0.0f, 0.0f, -1.0f};
 		radius = 0.5f;
-		lambertianMaterial = Entity::LambertianMaterial(Utility::Color{1.00f, 0.05f, 0.05f});
+		lambertianMaterial = Entity::LambertianMaterial(Utility::Color{0.8f, 0.3f, 0.2f});
 		scene.AddSceneObject(Entity::Sphere(position, radius, 
 											std::make_unique<Entity::LambertianMaterial>(lambertianMaterial)));
+
+		position = {1.0f, 0.0f, -1.0f};
+		radius = 0.5f;
+		metalMaterial = Entity::MetalMaterial(Utility::Color{0.8f, 0.6f, 0.2f}, 1.0f);
+		scene.AddSceneObject(Entity::Sphere(position, radius, 
+											std::make_unique<Entity::MetalMaterial>(metalMaterial)));
+
+		position = {-1.0f, 0.0f, -1.0f};
+		radius = 0.5f;
+		metalMaterial = Entity::MetalMaterial(Utility::Color{0.8f, 0.8f, 0.8f}, 0.3f);
+		scene.AddSceneObject(Entity::Sphere(position, radius, 
+											std::make_unique<Entity::MetalMaterial>(metalMaterial)));
 	}
 
 	// Render

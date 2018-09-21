@@ -25,6 +25,10 @@ Utility::Vector3f GetRandomVectorInUnitSphere()
 	}
 	return point;
 }
+Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal)
+{
+	return vector - (normal * vector.Dot(normal) * 2.0f);
+}
 
 std::string ReadLine()
 {

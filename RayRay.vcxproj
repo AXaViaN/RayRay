@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
     <ClCompile Include="Source\Entity\LambertianMaterial.cpp" />
+    <ClCompile Include="Source\Entity\MetalMaterial.cpp" />
     <ClCompile Include="Source\Entity\Renderer.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
@@ -34,6 +35,7 @@
     <ClInclude Include="Source\Entity\Camera.h" />
     <ClInclude Include="Source\Entity\LambertianMaterial.h" />
     <ClInclude Include="Source\Entity\Material.h" />
+    <ClInclude Include="Source\Entity\MetalMaterial.h" />
     <ClInclude Include="Source\Entity\Renderer.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />

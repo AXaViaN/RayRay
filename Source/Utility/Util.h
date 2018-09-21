@@ -13,6 +13,7 @@
 namespace Utility {
 
 Utility::Vector3f GetRandomVectorInUnitSphere();
+Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal);
 
 std::string ReadLine();
 
