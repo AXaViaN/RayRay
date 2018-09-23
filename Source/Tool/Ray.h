@@ -22,7 +22,7 @@ private:
 
 inline Ray::Ray(const Utility::Vector3f& origin, const Utility::Vector3f& direction) : 
 	m_Origin(origin),
-	m_Direction(direction)
+	m_Direction(direction.Normalized())
 {
 }
 

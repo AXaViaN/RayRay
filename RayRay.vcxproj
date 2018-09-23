@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
+    <ClCompile Include="Source\Entity\DielectricMaterial.cpp" />
     <ClCompile Include="Source\Entity\LambertianMaterial.cpp" />
     <ClCompile Include="Source\Entity\MetalMaterial.cpp" />
     <ClCompile Include="Source\Entity\Renderer.cpp" />
@@ -33,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Entity\Camera.h" />
+    <ClInclude Include="Source\Entity\DielectricMaterial.h" />
     <ClInclude Include="Source\Entity\LambertianMaterial.h" />
     <ClInclude Include="Source\Entity\Material.h" />
     <ClInclude Include="Source\Entity\MetalMaterial.h" />

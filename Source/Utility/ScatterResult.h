@@ -8,8 +8,8 @@ namespace Utility {
 
 struct ScatterResult
 {
-	Tool::Ray ReflectionRay;
-	Utility::Color Color;
+	Tool::Ray ScatterRay;
+	Utility::Color ObjectColor;
 
 	bool IsScatter = false;
 
@@ -18,7 +18,7 @@ public:
 };
 
 inline ScatterResult::ScatterResult() : 
-	ReflectionRay({}, {})
+	ScatterRay({}, {})
 {
 }
 

@@ -14,6 +14,11 @@ namespace Utility {
 
 Utility::Vector3f GetRandomVectorInUnitSphere();
 Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal);
+/*
+ *	@returns zero vector if there is no refraction
+ */
+Utility::Vector3f Refract(const Utility::Vector3f& vector, const Utility::Vector3f& normal, float N1OverN2);
+float FresnelSchlick(float cosine, float refractiveIndex);
 
 std::string ReadLine();
 

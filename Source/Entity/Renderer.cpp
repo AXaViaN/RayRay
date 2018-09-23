@@ -143,11 +143,11 @@ static Utility::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray,
 			auto scatterResult = hitResult.Object->Material->ScatterCheck(ray, hitResult);
 			if(scatterResult.IsScatter)
 			{
-				auto reflectedColor = GetColor(scene, scatterResult.ReflectionRay, scatterDepth-1);
+				auto scatterColor = GetColor(scene, scatterResult.ScatterRay, scatterDepth-1);
 
-				color = {scatterResult.Color.R * reflectedColor.R,
-						 scatterResult.Color.G * reflectedColor.G,
-						 scatterResult.Color.B * reflectedColor.B};
+				color = {scatterResult.ObjectColor.R * scatterColor.R,
+						 scatterResult.ObjectColor.G * scatterColor.G,
+						 scatterResult.ObjectColor.B * scatterColor.B};
 			}
 		}
 
