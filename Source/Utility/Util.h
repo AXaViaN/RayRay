@@ -30,6 +30,8 @@ static const float Tan(float angle)
 }
 
 Utility::Vector3f GetRandomVectorInUnitSphere();
+Utility::Vector3f GetRandomVectorInUnitDisk();
+
 Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal);
 /*
  *	@returns zero vector if there is no refraction

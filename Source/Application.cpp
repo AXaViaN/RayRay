@@ -60,11 +60,22 @@ static Entity::Scene CreateScene()
 	return scene;
 }
 
+static Entity::Camera SetupCamera()
+{
+	Utility::Vector3f position = {3.0f, 3.0f, 2.0f};
+	Utility::Vector3f lookat = {0.0f, 0.0f, -1.0f};
+	Utility::Vector3f up = {0.0f, 1.0f, 0.0f};
+	float fov = 20.0f;
+	float aperture = 2.0f;
+	float aspectRatio = OutputSize.X / (float)OutputSize.Y;
+
+	return Entity::Camera(position, lookat, up, fov, aperture, aspectRatio);
+}
+
 int main()
 {
 	// Setup camera
-	Entity::Camera camera({1.0f, 2.0f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, 
-						  30.0f, OutputSize.X/(float)OutputSize.Y);
+	Entity::Camera camera = SetupCamera();
 
 	// Setup scene
 	Entity::Scene scene = CreateScene();

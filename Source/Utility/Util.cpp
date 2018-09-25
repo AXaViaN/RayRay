@@ -11,20 +11,33 @@
 
 namespace Utility {
 
+static Utility::Random s_Random;
+
 Utility::Vector3f GetRandomVectorInUnitSphere()
 {
-	static Utility::Random random;
-
 	Utility::Vector3f point = {1.0f, 1.0f, 1.0f};
 	while(point.SquaredLength() >= 1.0f)
 	{
 		// Random vector
-		point = {random.GetFloat(), random.GetFloat(), random.GetFloat()};
+		point = {s_Random.GetFloat(), s_Random.GetFloat(), s_Random.GetFloat()};
 		// [0,1) -> (-1,+1)
 		point = (point * 2.0f) - Utility::Vector3f{1.0f, 1.0f, 1.0f};
 	}
 	return point;
 }
+Utility::Vector3f GetRandomVectorInUnitDisk()
+{
+	Utility::Vector3f point = {1.0f, 1.0f, 0.0f};
+	while(point.SquaredLength() >= 1.0f)
+	{
+		// Random vector
+		point = {s_Random.GetFloat(), s_Random.GetFloat(), 0.0f};
+		// [0,1) -> (-1,+1)
+		point = (point * 2.0f) - Utility::Vector3f{1.0f, 1.0f, 0.0f};
+	}
+	return point;
+}
+
 Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal)
 {
 	return vector - (normal * vector.Dot(normal) * 2.0f);

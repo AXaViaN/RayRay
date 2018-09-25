@@ -10,12 +10,16 @@ namespace Tool {
 class RenderPlane
 {
 public:
-	RenderPlane(const Utility::Vector3f& position, const Utility::Vector3f& forward, const Utility::Vector3f& up, const Utility::Vector3f& right, const Utility::Vector3f& frustumSize);
+	RenderPlane(const Utility::Vector3f& forward, const Utility::Vector3f& up, const Utility::Vector3f& right, const Utility::Vector3f& frustumSize);
 
-	Tool::Ray GetRay(const Utility::Vector2f& uv) const;
+	Utility::Vector3f GetPoint(const Utility::Vector2f& uv) const;
+
+public:
+	const Utility::Vector3f Up;
+	const Utility::Vector3f Right;
+	const Utility::Vector3f Forward;
 
 private:
-	Utility::Vector3f m_Position;
 	Utility::Vector3f m_Horizontal;
 	Utility::Vector3f m_Vertical;
 	Utility::Vector3f m_LowerLeftCorner;
