@@ -1,44 +1,26 @@
 #ifndef TOOL__RENDER_PLANE
 #define TOOL__RENDER_PLANE
 
+#include <Tool/Ray.h>
 #include <Utility/Vector3.h>
+#include <Utility/Vector2.h>
 
 namespace Tool {
 
 class RenderPlane
 {
 public:
-	RenderPlane(const Utility::Vector3f& origin, const Utility::Vector3f& size, float screenRatio);
+	RenderPlane(const Utility::Vector3f& position, const Utility::Vector3f& forward, const Utility::Vector3f& up, const Utility::Vector3f& right, const Utility::Vector3f& frustumSize);
 
-	inline const Utility::Vector3f& GetOrigin() const;
-	inline const Utility::Vector3f& GetLowerLeft() const;
-	inline const Utility::Vector3f& GetHorizontal() const;
-	inline const Utility::Vector3f& GetVertical() const;
+	Tool::Ray GetRay(const Utility::Vector2f& uv) const;
 
 private:
-	Utility::Vector3f m_Origin;
-	Utility::Vector3f m_LowerLeftCorner;
+	Utility::Vector3f m_Position;
 	Utility::Vector3f m_Horizontal;
 	Utility::Vector3f m_Vertical;
+	Utility::Vector3f m_LowerLeftCorner;
 
 };
-
-inline const Utility::Vector3f& RenderPlane::GetOrigin() const
-{
-	return m_Origin;
-}
-inline const Utility::Vector3f& RenderPlane::GetLowerLeft() const
-{
-	return m_LowerLeftCorner;
-}
-inline const Utility::Vector3f& RenderPlane::GetHorizontal() const
-{
-	return m_Horizontal;
-}
-inline const Utility::Vector3f& RenderPlane::GetVertical() const
-{
-	return m_Vertical;
-}
 
 } // namespace Tool
 

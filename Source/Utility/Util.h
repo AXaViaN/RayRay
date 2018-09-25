@@ -3,6 +3,7 @@
 
 #include <Utility/Vector3.h>
 #include <string>
+#include <cmath>
 
 #if defined(_WIN32) || defined(WIN32)
 	#define OS_WINDOWS 1
@@ -11,6 +12,22 @@
 #endif
 
 namespace Utility {
+
+static const float PI = static_cast<float>(std::acos(-1.0));
+static const float TO_RADIAN = PI / 180.0f;
+
+static const float Sin(float angle)
+{
+	return std::sinf(angle * TO_RADIAN);
+}
+static const float Cos(float angle)
+{
+	return std::cosf(angle * TO_RADIAN);
+}
+static const float Tan(float angle)
+{
+	return std::tanf(angle * TO_RADIAN);
+}
 
 Utility::Vector3f GetRandomVectorInUnitSphere();
 Utility::Vector3f Reflect(const Utility::Vector3f& vector, const Utility::Vector3f& normal);

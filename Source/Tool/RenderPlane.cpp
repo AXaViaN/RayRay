@@ -2,17 +2,20 @@
 
 namespace Tool {
 
-Utility::Vector3f m_Horizontal;
-Utility::Vector3f m_Vertical;
-RenderPlane::RenderPlane(const Utility::Vector3f& origin, const Utility::Vector3f& size, float screenRatio) : 
-	m_Origin(origin),
-	m_LowerLeftCorner(-size/2),
-	m_Horizontal(Utility::Vector3f::Right * size.X),
-	m_Vertical(Utility::Vector3f::Up * size.Y)
+RenderPlane::RenderPlane(const Utility::Vector3f& position, const Utility::Vector3f& forward, const Utility::Vector3f& up, const Utility::Vector3f& right, const Utility::Vector3f& frustumSize) : 
+	m_Position(position),
+	m_Horizontal(right.Normalized() * frustumSize.X),
+	m_Vertical(up.Normalized() * frustumSize.Y),
+	m_LowerLeftCorner(position - m_Horizontal/2 - m_Vertical/2 - forward)
 {
-	// Adjust render plane with screen ratio
-	m_Horizontal.X *= screenRatio;
-	m_LowerLeftCorner.X *= screenRatio;
+}
+
+Tool::Ray RenderPlane::GetRay(const Utility::Vector2f& uv) const
+{
+	auto rayHead = m_LowerLeftCorner + m_Horizontal*uv.X + m_Vertical*uv.Y;
+	auto rayDirection = rayHead - m_Position;
+
+	return Tool::Ray(m_Position, rayDirection);
 }
 
 } // namespace Tool

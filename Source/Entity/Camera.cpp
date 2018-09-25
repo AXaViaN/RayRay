@@ -1,20 +1,31 @@
 #include <Entity/Camera.h>
+#include <Utility/Util.h>
 
 namespace Entity {
 
-Camera::Camera(const Utility::Vector3f& position, float screenRatio) : 
-	m_RenderPlane(position, {1.0f, 1.0f, 1.0f}, screenRatio),
-	m_Position(position)
+static Tool::RenderPlane CreateRenderPlane(const Utility::Vector3f& position, const Utility::Vector3f& lookat, const Utility::Vector3f& up, float fov, float screenRatio);
+
+Camera::Camera(const Utility::Vector3f& position, const Utility::Vector3f& lookat, const Utility::Vector3f& up, float fov, float screenRatio) : 
+	m_RenderPlane(CreateRenderPlane(position, lookat, up, fov, screenRatio))
 {
 }
 
-Tool::Ray Camera::GetRay(const Utility::Vector2f uv) const
+Tool::Ray Camera::GetRay(const Utility::Vector2f& uv) const
 {
-	auto rayHead = m_RenderPlane.GetLowerLeft() + 
-				   m_RenderPlane.GetHorizontal()*uv.X + m_RenderPlane.GetVertical()*uv.Y;
-	auto rayDirection = rayHead - m_Position;
+	return m_RenderPlane.GetRay(uv);
+}
 
-	return Tool::Ray(m_Position, rayDirection);
+static Tool::RenderPlane CreateRenderPlane(const Utility::Vector3f& position, const Utility::Vector3f& lookat, const Utility::Vector3f& up, float fov, float screenRatio)
+{
+	float height = Utility::Tan(fov / 2.0f) * 2.0f;
+	float width = height * screenRatio;
+
+	auto planeForward = (position - lookat).Normalized();
+	auto planeRight = up.Cross(planeForward).Normalized();
+	auto planeUp = planeForward.Cross(planeRight).Normalized();
+
+	Utility::Vector3f frustumSize = {width, height, 2.0f};
+	return Tool::RenderPlane(position, planeForward, planeUp, planeRight, frustumSize);
 }
 
 } // namespace Entity

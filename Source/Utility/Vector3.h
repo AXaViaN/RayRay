@@ -69,9 +69,9 @@ template<typename T> inline T Vector3<T>::Dot(const Vector3<T>& other) const
 }
 template<typename T> inline Vector3<T> Vector3<T>::Cross(const Vector3<T>& other) const
 {
-	return { Y*other.Z - Z*other.Y,
-			-X*other.Z - Z*other.X,
-			 X*other.Y - Y*other.X};
+	return {Y*other.Z - Z*other.Y,
+			Z*other.X - X*other.Z,
+			X*other.Y - Y*other.X};
 }
 template<typename T> inline T Vector3<T>::Length() const
 {
