@@ -1,15 +1,17 @@
-#ifndef UTILITY__RANDOM
-#define UTILITY__RANDOM
+#ifndef TOOL__RANDOM
+#define TOOL__RANDOM
 
 #include <random>
 
-namespace Utility {
+namespace Tool {
 
 class Random
 {
 public:
 	inline Random();
 	inline Random(unsigned int seed);
+
+	static inline Random& Instance();
 
 	inline void Seed(unsigned int seed);
 	inline unsigned int GetLastSeed() const;
@@ -27,6 +29,8 @@ private:
 
 };
 
+/***** IMPLEMENTATION *****/
+
 inline Random::Random()
 {
 	Seed(std::random_device()());
@@ -34,6 +38,12 @@ inline Random::Random()
 inline Random::Random(unsigned int seed)
 {
 	Seed(seed);
+}
+
+inline Random& Random::Instance()
+{
+	static Random instance;
+	return instance;
 }
 
 inline void Random::Seed(unsigned int seed)
@@ -63,6 +73,6 @@ inline int Random::GetInt(int min, int max)
 	return static_cast<int>(GetFloat(static_cast<float>(min), static_cast<float>(max)));
 }
 
-} // namespace Utility
+} // namespace Tool
 
-#endif // UTILITY__RANDOM
+#endif // TOOL__RANDOM

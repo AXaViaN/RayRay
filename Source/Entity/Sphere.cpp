@@ -1,10 +1,19 @@
 #include <Entity/Sphere.h>
+#include <Tool/Ray.h>
+#include <Tool/HitResult.h>
 
 namespace Entity {
 
-Utility::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
+Sphere::Sphere(const Tool::Vector3f& center, float radius, std::unique_ptr<Asset::Material>&& material) : 
+	m_Center(center),
+	m_Radius(radius)
 {
-	Utility::HitResult hitResult;
+	Material = std::move(material);
+}
+
+Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
+{
+	Tool::HitResult hitResult;
 	hitResult.Object = this;
 
 	// If we want to check a point is on the sphere we can use: |P-C|=R
@@ -41,7 +50,7 @@ Utility::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT
 	return hitResult;
 }
 
-void Sphere::TestHitResult(Utility::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const
+void Sphere::TestHitResult(Tool::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const
 {
 	if(hitResult.T < maxT && 
 	   hitResult.T > minT)

@@ -1,7 +1,7 @@
-#ifndef UTILITY__VECTOR2
-#define UTILITY__VECTOR2
+#ifndef TOOL__VECTOR2
+#define TOOL__VECTOR2
 
-namespace Utility {
+namespace Tool {
 
 template<typename T> class Vector2;
 using Vector2f = Vector2<float>;
@@ -15,6 +15,6 @@ public:
 
 };
 
-} // namespace Utility
+} // namespace Tool
 
-#endif // UTILITY__VECTOR2
+#endif // TOOL__VECTOR2

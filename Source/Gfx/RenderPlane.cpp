@@ -1,8 +1,8 @@
-#include <Tool/RenderPlane.h>
+#include <Gfx/RenderPlane.h>
 
-namespace Tool {
+namespace Gfx {
 
-RenderPlane::RenderPlane(const Utility::Vector3f& forward, const Utility::Vector3f& up, const Utility::Vector3f& right, const Utility::Vector3f& frustumSize) : 
+RenderPlane::RenderPlane(const Tool::Vector3f& forward, const Tool::Vector3f& up, const Tool::Vector3f& right, const Tool::Vector3f& frustumSize) : 
 	Up(up.Normalized()),
 	Right(right.Normalized()),
 	Forward(forward.Normalized()),
@@ -12,9 +12,9 @@ RenderPlane::RenderPlane(const Utility::Vector3f& forward, const Utility::Vector
 {
 }
 
-Utility::Vector3f RenderPlane::GetPoint(const Utility::Vector2f& uv) const
+Tool::Vector3f RenderPlane::GetPoint(const Tool::Vector2f& uv) const
 {
 	return (m_LowerLeftCorner + m_Horizontal*uv.X + m_Vertical*uv.Y);
 }
 
-} // namespace Tool
+} // namespace Gfx

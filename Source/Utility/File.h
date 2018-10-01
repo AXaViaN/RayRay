@@ -1,9 +1,9 @@
-#ifndef TOOL__FILE
-#define TOOL__FILE
+#ifndef UTILITY__FILE
+#define UTILITY__FILE
 
 #include <string>
 
-namespace Tool {
+namespace Utility {
 
 class File
 {
@@ -57,6 +57,8 @@ private:
 
 };
 
+/***** IMPLEMENTATION *****/
+
 template<typename T> inline void File::WriteBinaryNumber(const T& value)
 {
 	WriteBinaryNumber(&value, sizeof(T));
@@ -77,6 +79,6 @@ inline bool File::IsEOF() const
 	return m_IsEOF;
 }
 
-} // namespace Tool
+} // namespace Utility
 
-#endif // TOOL__FILE
+#endif // UTILITY__FILE

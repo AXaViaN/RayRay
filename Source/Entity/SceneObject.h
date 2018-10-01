@@ -1,21 +1,23 @@
 #ifndef ENTITY__SCENE_OBJECT
 #define ENTITY__SCENE_OBJECT
 
-#include <Entity/Material.h>
-#include <Tool/Ray.h>
-#include <Utility/Color.h>
-#include <Utility/HitResult.h>
+#include <Asset/Material.h>
 #include <memory>
+
+namespace Tool {
+	class Ray;
+	class HitResult;
+}
 
 namespace Entity {
 
 class SceneObject
 {
 public:
-	virtual Utility::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const = 0;
+	virtual Tool::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const = 0;
 
 public:
-	std::unique_ptr<Entity::Material> Material;
+	std::unique_ptr<Asset::Material> Material;
 
 };
 

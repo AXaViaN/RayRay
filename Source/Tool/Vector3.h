@@ -1,9 +1,9 @@
-#ifndef UTILITY__VECTOR3
-#define UTILITY__VECTOR3
+#ifndef TOOL__VECTOR3
+#define TOOL__VECTOR3
 
 #include <cmath>
 
-namespace Utility {
+namespace Tool {
 
 template<typename T> class Vector3;
 using Vector3f = Vector3<float>;
@@ -49,6 +49,8 @@ public:
 	T Z = 0;
 
 };
+
+/***** IMPLEMENTATION *****/
 
 template<typename T> inline Vector3<T>::Vector3()
 {
@@ -164,6 +166,6 @@ template<typename T> inline Vector3<T>& Vector3<T>::operator/=(T t)
 	return *this;
 }
 
-} // namespace Utility
+} // namespace Tool
 
-#endif // UTILITY__VECTOR3
+#endif // TOOL__VECTOR3

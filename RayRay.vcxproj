@@ -21,38 +21,41 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
-    <ClCompile Include="Source\Entity\DielectricMaterial.cpp" />
-    <ClCompile Include="Source\Entity\LambertianMaterial.cpp" />
-    <ClCompile Include="Source\Entity\MetalMaterial.cpp" />
-    <ClCompile Include="Source\Entity\Renderer.cpp" />
+    <ClCompile Include="Source\Asset\DielectricMaterial.cpp" />
+    <ClCompile Include="Source\Asset\LambertianMaterial.cpp" />
+    <ClCompile Include="Source\Asset\MetalMaterial.cpp" />
+    <ClCompile Include="Source\Gfx\Renderer.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
-    <ClCompile Include="Source\Tool\RenderPlane.cpp" />
-    <ClCompile Include="Source\Tool\File.cpp" />
-    <ClCompile Include="Source\Tool\Texture.cpp" />
+    <ClCompile Include="Source\Gfx\RenderPlane.cpp" />
+    <ClCompile Include="Source\Gfx\Util.cpp" />
+    <ClCompile Include="Source\Utility\File.cpp" />
+    <ClCompile Include="Source\Utility\Texture.cpp" />
     <ClCompile Include="Source\Utility\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Entity\Camera.h" />
-    <ClInclude Include="Source\Entity\DielectricMaterial.h" />
-    <ClInclude Include="Source\Entity\LambertianMaterial.h" />
-    <ClInclude Include="Source\Entity\Material.h" />
-    <ClInclude Include="Source\Entity\MetalMaterial.h" />
-    <ClInclude Include="Source\Entity\Renderer.h" />
+    <ClInclude Include="Source\Asset\DielectricMaterial.h" />
+    <ClInclude Include="Source\Asset\LambertianMaterial.h" />
+    <ClInclude Include="Source\Asset\Material.h" />
+    <ClInclude Include="Source\Asset\MetalMaterial.h" />
+    <ClInclude Include="Source\Gfx\Renderer.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />
     <ClInclude Include="Source\Entity\Sphere.h" />
-    <ClInclude Include="Source\Tool\RenderPlane.h" />
-    <ClInclude Include="Source\Tool\File.h" />
-    <ClInclude Include="Source\Tool\Texture.h" />
-    <ClInclude Include="Source\Utility\Color.h" />
-    <ClInclude Include="Source\Utility\HitResult.h" />
+    <ClInclude Include="Source\Gfx\RenderPlane.h" />
+    <ClInclude Include="Source\Gfx\Util.h" />
+    <ClInclude Include="Source\Tool\Math.h" />
+    <ClInclude Include="Source\Utility\File.h" />
+    <ClInclude Include="Source\Utility\Texture.h" />
+    <ClInclude Include="Source\Tool\Color.h" />
+    <ClInclude Include="Source\Tool\HitResult.h" />
     <ClInclude Include="Source\Tool\Ray.h" />
-    <ClInclude Include="Source\Utility\Random.h" />
-    <ClInclude Include="Source\Utility\ScatterResult.h" />
+    <ClInclude Include="Source\Tool\Random.h" />
+    <ClInclude Include="Source\Tool\ScatterResult.h" />
     <ClInclude Include="Source\Utility\Util.h" />
-    <ClInclude Include="Source\Utility\Vector2.h" />
-    <ClInclude Include="Source\Utility\Vector3.h" />
+    <ClInclude Include="Source\Tool\Vector2.h" />
+    <ClInclude Include="Source\Tool\Vector3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

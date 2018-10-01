@@ -1,40 +1,42 @@
 #ifndef TOOL__RAY
 #define TOOL__RAY
 
-#include <Utility/Vector3.h>
+#include <Tool/Vector3.h>
 
 namespace Tool {
 
 class Ray
 {
 public:
-	inline Ray(const Utility::Vector3f& origin, const Utility::Vector3f& direction);
+	inline Ray(const Tool::Vector3f& origin, const Tool::Vector3f& direction);
 
-	inline const Utility::Vector3f& GetOrigin() const;
-	inline const Utility::Vector3f& GetDirection() const;
-	inline Utility::Vector3f GetPoint(float t) const;
+	inline const Tool::Vector3f& GetOrigin() const;
+	inline const Tool::Vector3f& GetDirection() const;
+	inline Tool::Vector3f GetPoint(float t) const;
 
 private:
-	Utility::Vector3f m_Origin;
-	Utility::Vector3f m_Direction;
+	Tool::Vector3f m_Origin;
+	Tool::Vector3f m_Direction;
 
 };
 
-inline Ray::Ray(const Utility::Vector3f& origin, const Utility::Vector3f& direction) : 
+/***** IMPLEMENTATION *****/
+
+inline Ray::Ray(const Tool::Vector3f& origin, const Tool::Vector3f& direction) : 
 	m_Origin(origin),
 	m_Direction(direction.Normalized())
 {
 }
 
-inline const Utility::Vector3f& Ray::GetOrigin() const
+inline const Tool::Vector3f& Ray::GetOrigin() const
 {
 	return m_Origin;
 }
-inline const Utility::Vector3f& Ray::GetDirection() const
+inline const Tool::Vector3f& Ray::GetDirection() const
 {
 	return m_Direction;
 }
-inline Utility::Vector3f Ray::GetPoint(float t) const
+inline Tool::Vector3f Ray::GetPoint(float t) const
 {
 	return m_Origin + m_Direction*t;
 }

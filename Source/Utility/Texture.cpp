@@ -1,12 +1,12 @@
-#include <Tool/Texture.h>
+#include <Utility/Texture.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
 
-namespace Tool {
+namespace Utility {
 
-Texture::Texture(const Utility::Vector2u& size) : 
+Texture::Texture(const Tool::Vector2u& size) : 
 	m_Size(size),
-	m_Data(m_Size.X * m_Size.Y, Utility::Color())
+	m_Data(m_Size.X * m_Size.Y, Tool::Color())
 {
 }
 
@@ -31,15 +31,15 @@ void Texture::Save(const std::string& fileName, float gamma)
 	stbi_write_png((fileName+".png").c_str(), m_Size.X, m_Size.Y, ColorChannel, writeData.data(), 0);
 }
 
-void Texture::SetPixel(const Utility::Vector2u& position, const Utility::Color& color)
+void Texture::SetPixel(const Tool::Vector2u& position, const Tool::Color& color)
 {
 	size_t inverseY = (m_Size.Y-1) - position.Y;
 	m_Data[position.X + inverseY*m_Size.X] = color;
 }
-Utility::Color Texture::GetPixel(const Utility::Vector2u& position) const
+Tool::Color Texture::GetPixel(const Tool::Vector2u& position) const
 {
 	size_t inverseY = (m_Size.Y-1) - position.Y;
 	return m_Data[position.X + inverseY*m_Size.X];
 }
 
-} // namespace Tool
+} // namespace Utility

@@ -1,10 +1,12 @@
 #include <Entity/Scene.h>
+#include <Tool/Ray.h>
+#include <Tool/HitResult.h>
 
 namespace Entity {
 
-Utility::HitResult Scene::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
+Tool::HitResult Scene::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
 {
-	Utility::HitResult bestHitResult;
+	Tool::HitResult bestHitResult;
 	bestHitResult.T = maxT;
 
 	for( auto& sceneObject : m_SceneObjects )

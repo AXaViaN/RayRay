@@ -1,19 +1,24 @@
-#include <Entity/DielectricMaterial.h>
-#include <Utility/Util.h>
-#include <Utility/Random.h>
+#include <Asset/DielectricMaterial.h>
+#include <Gfx/Util.h>
+#include <Tool/HitResult.h>
+#include <Tool/ScatterResult.h>
+#include <Tool/Random.h>
 
-namespace Entity {
+namespace Asset {
 
-static Utility::Random s_Random;
-
-Utility::ScatterResult DielectricMaterial::ScatterCheck(const Tool::Ray& ray, const Utility::HitResult& hitResult) const
+DielectricMaterial::DielectricMaterial(float refractiveIndex) : 
+	m_RefractiveIndex(refractiveIndex)
 {
-	Utility::ScatterResult scatterResult;
+}
+
+Tool::ScatterResult DielectricMaterial::ScatterCheck(const Tool::Ray& ray, const Tool::HitResult& hitResult) const
+{
+	Tool::ScatterResult scatterResult;
 	scatterResult.ObjectColor = {1.0f, 1.0f, 1.0f};
 	scatterResult.IsScatter = true;
 
 	// We want to refract. So we are calculating from air to inside of the material
-	Utility::Vector3f outwardNormal = hitResult.Normal;
+	Tool::Vector3f outwardNormal = hitResult.Normal;
 	float N1OverN2 = 1.0f / m_RefractiveIndex;
 	float cosine = ray.GetDirection().Dot(hitResult.Normal);
 
@@ -28,25 +33,25 @@ Utility::ScatterResult DielectricMaterial::ScatterCheck(const Tool::Ray& ray, co
 	// Calculate fresnel (reflection coefficient)
 	// If a refraction is not possible we will take fresnel as 1 and reflect
 	float fresnel = 1.0f;
-	Utility::Vector3f refracted = Utility::Refract(ray.GetDirection(), outwardNormal, N1OverN2);
+	Tool::Vector3f refracted = Gfx::Util::Refract(ray.GetDirection(), outwardNormal, N1OverN2);
 	if(refracted.SquaredLength() != 0)
 	{
-		fresnel = Utility::FresnelSchlick(-cosine, m_RefractiveIndex);
+		fresnel = Gfx::Util::FresnelSchlick(-cosine, m_RefractiveIndex);
 	}
 
 	// Select a random barrier and test fresnel
-	float fresnelBarrier = s_Random.GetFloat();
+	float fresnelBarrier = Tool::Random::Instance().GetFloat();
 	if(fresnel < fresnelBarrier)
 	{
 		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, refracted);
 	}
 	else
 	{
-		Utility::Vector3f reflected = Utility::Reflect(ray.GetDirection(), hitResult.Normal);
+		Tool::Vector3f reflected = Gfx::Util::Reflect(ray.GetDirection(), hitResult.Normal);
 		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, reflected);
 	}
 
 	return scatterResult;
 }
 
-} // namespace Entity
+} // namespace Asset

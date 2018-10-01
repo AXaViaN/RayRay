@@ -1,4 +1,4 @@
-#include <Tool/File.h>
+#include <Utility/File.h>
 #include <Utility/Util.h>
 #include <cstdio>
 #include <algorithm>
@@ -7,7 +7,7 @@
 	#include <Windows.h>
 #endif
 
-namespace Tool {
+namespace Utility {
 
 static void LogError(const std::string& message)
 {
@@ -303,6 +303,8 @@ void File::ReadBinaryNumber(void* value, size_t size)
 	Utility::FixEndianness(value, size);
 }
 
+/***** STATIC FUNCTIONS *****/
+
 static bool DoesFolderExists(const std::string& path)
 {
 	bool result = false;
@@ -347,4 +349,4 @@ static void CreateFolder(const std::string& path)
 	}
 }
 
-} // namespace Tool
+} // namespace Utility
