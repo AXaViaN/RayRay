@@ -16,7 +16,7 @@ Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) c
 	Tool::HitResult hitResult;
 	hitResult.Object = this;
 
-	// If we want to check a point is on the sphere we can use: |P-C|=R
+	// If we want to check if a point is on the sphere we can use: |P-C|=R
 	// where P is the point, C is the sphere center, R is the sphere radius.
 	// It can also be represented as (P-C)*(P-C)=R^2 where * means dot product.
 	// When checking with a ray it becomes (P(t)-C)*(P(t)-C)=R^2

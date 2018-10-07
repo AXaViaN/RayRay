@@ -29,6 +29,10 @@
     <ClCompile Include="Source\Entity\Sphere.cpp" />
     <ClCompile Include="Source\Gfx\RenderPlane.cpp" />
     <ClCompile Include="Source\Gfx\Util.cpp" />
+    <ClCompile Include="Source\Test\001-EmptyScene.cpp" />
+    <ClCompile Include="Source\Test\003-FirstBookTest.cpp" />
+    <ClCompile Include="Source\Test\RayRayTest.cpp" />
+    <ClCompile Include="Source\Test\002-RedSphere.cpp" />
     <ClCompile Include="Source\Utility\File.cpp" />
     <ClCompile Include="Source\Utility\Texture.cpp" />
     <ClCompile Include="Source\Utility\Util.cpp" />
@@ -45,6 +49,7 @@
     <ClInclude Include="Source\Entity\Sphere.h" />
     <ClInclude Include="Source\Gfx\RenderPlane.h" />
     <ClInclude Include="Source\Gfx\Util.h" />
+    <ClInclude Include="Source\Test\RayRayTest.h" />
     <ClInclude Include="Source\Tool\Math.h" />
     <ClInclude Include="Source\Utility\File.h" />
     <ClInclude Include="Source\Utility\Texture.h" />

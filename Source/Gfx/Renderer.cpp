@@ -29,28 +29,28 @@ static void GetSampleTexture(const SampleData& data);
 static Tool::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, size_t scatterDepth);
 static Tool::Color GetBackgroundColor(const Tool::Ray& ray);
 
-Renderer::Renderer(const Tool::Vector2u& outputSize, size_t aaSampleCount) : 
+Renderer::Renderer(const Tool::Vector2u& outputSize, size_t sampleCount, size_t threadCount) : 
 	m_OutputSize(outputSize),
-	m_AASampleCount(aaSampleCount)
+	m_SampleCount(sampleCount),
+	m_ThreadCount(threadCount)
 {
 }
 
 Utility::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity::Camera& camera, size_t scatterDepth) const
 {
 	Tool::Vector2u sampleSize = {
-		(unsigned int)std::sqrtf((float)m_AASampleCount),
-		(unsigned int)(m_AASampleCount / sampleSize.X)
+		(unsigned int)std::sqrtf((float)m_SampleCount),
+		(unsigned int)(m_SampleCount / sampleSize.X)
 	};
-	size_t aaSampleCount = sampleSize.X * sampleSize.Y;
+	size_t sampleCount = sampleSize.X * sampleSize.Y;
 
 	Utility::Texture output(m_OutputSize);
 	std::mutex outputMutex;
 
 	// Get samples
-	constexpr size_t ThreadCount = 6;
-	std::thread threads[ThreadCount];
+	std::vector<std::thread> threads(m_ThreadCount);
 	size_t threadIdx = 0;
-	SampleData sampleData = {scene, camera, scatterDepth, output, outputMutex, aaSampleCount, m_OutputSize};
+	SampleData sampleData = {scene, camera, scatterDepth, output, outputMutex, sampleCount, m_OutputSize};
 	Tool::Vector2u sampleOffset;
 	for( sampleOffset.Y=0 ; sampleOffset.Y<sampleSize.Y ; ++sampleOffset.Y )
 	{
@@ -61,7 +61,7 @@ Utility::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity:
 				float(sampleOffset.Y) / float(sampleSize.Y)
 			};
 
-			if(threadIdx >= ThreadCount)
+			if(threadIdx >= m_ThreadCount)
 			{
 				threadIdx = 0;
 			}
