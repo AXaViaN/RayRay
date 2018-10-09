@@ -43,12 +43,12 @@ Tool::ScatterResult DielectricMaterial::ScatterCheck(const Tool::Ray& ray, const
 	float fresnelBarrier = Tool::Random::Instance().GetFloat();
 	if(fresnel < fresnelBarrier)
 	{
-		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, refracted);
+		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, refracted, ray.GetFireTime());
 	}
 	else
 	{
 		Tool::Vector3f reflected = Gfx::Util::Reflect(ray.GetDirection(), hitResult.Normal);
-		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, reflected);
+		scatterResult.ScatterRay = Tool::Ray(hitResult.Point, reflected, ray.GetFireTime());
 	}
 
 	return scatterResult;

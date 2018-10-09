@@ -23,7 +23,7 @@ Tool::ScatterResult MetalMaterial::ScatterCheck(const Tool::Ray& ray, const Tool
 	reflectedVector += Gfx::Util::GetRandomVectorInUnitSphere() * m_Fuzziness;
 	reflectedVector.Normalize();
 
-	scatterResult.ScatterRay = Tool::Ray(hitResult.Point, reflectedVector);
+	scatterResult.ScatterRay = Tool::Ray(hitResult.Point, reflectedVector, ray.GetFireTime());
 
 	scatterResult.IsScatter = (reflectedVector.Dot(hitResult.Normal) > 0);
 	return scatterResult;

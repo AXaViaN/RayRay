@@ -28,8 +28,9 @@ private:
 		float fov = 90.0f;
 		float aperture = 0.0f;
 		float focalOffset = 0.0f;
+		float exposureTime = 0.0f;
 
-		return Entity::Camera(position, lookat, up, fov, aperture, focalOffset, aspectRatio);
+		return Entity::Camera(position, lookat, up, fov, aperture, focalOffset, exposureTime, aspectRatio);
 	}
 };
 

@@ -12,7 +12,7 @@ static std::vector<RayRayTest::Spawner>& s_SpawnerList()
 }
 
 RayRayTest::RayRayTest() : 
-	m_Camera({}, {}, {}, 0, 0, 0, 0)
+	m_Camera({}, {}, {}, 0, 0, 0, 0, 0)
 {
 }
 
@@ -33,7 +33,7 @@ const std::vector<RayRayTest::Spawner>& RayRayTest::GetSpawners()
 	return spawnerList;
 }
 
-Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t sampleCount, size_t threadCount)
+Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t scatterDepth, size_t sampleCount, size_t threadCount)
 {
 	float aspectRatio = outputSize.X / (float)outputSize.Y;
 
@@ -45,7 +45,7 @@ Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t sample
 
 	// Render
 	Gfx::Renderer renderer(outputSize, sampleCount, threadCount);
-	Utility::Texture renderTexture = renderer.RenderScene(scene, camera);
+	Utility::Texture renderTexture = renderer.RenderScene(scene, camera, scatterDepth);
 
 	return renderTexture;
 }

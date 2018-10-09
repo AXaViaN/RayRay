@@ -1,6 +1,7 @@
 #include <Entity/Sphere.h>
 #include <Tool/Ray.h>
 #include <Tool/HitResult.h>
+#include <Tool/Math.h>
 
 namespace Entity {
 
@@ -9,6 +10,13 @@ Sphere::Sphere(const Tool::Vector3f& center, float radius, std::unique_ptr<Asset
 	m_Radius(radius)
 {
 	Material = std::move(material);
+}
+
+void Sphere::Move(const Tool::Vector3f& target, float t0, float t1)
+{
+	m_MoveData.Target = target;
+	m_MoveData.StartTime = t0;
+	m_MoveData.EndTime = t1;
 }
 
 Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
@@ -26,7 +34,7 @@ Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) c
 	// Only variable thing is t. So it is a quadratic equation.
 	// discriminant>0 means 2 intersection, discriminant=0 means 1, discriminant<0 means none
 
-	auto sphereToRay = ray.GetOrigin() - m_Center;
+	auto sphereToRay = ray.GetOrigin() - GetCurrentCenter(ray.GetFireTime());
 
 	float a = ray.GetDirection().Dot(ray.GetDirection());
 	float b = 2.0f * ray.GetDirection().Dot(sphereToRay);
@@ -50,6 +58,16 @@ Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) c
 	return hitResult;
 }
 
+Tool::Vector3f Sphere::GetCurrentCenter(float time) const
+{
+	if(m_MoveData.StartTime == m_MoveData.EndTime)
+	{
+		return m_Center;
+	}
+
+	float percentage = Tool::Math::Percentage(m_MoveData.StartTime, m_MoveData.EndTime, time);
+	return Tool::Math::Lerp(m_Center, m_MoveData.Target, percentage);
+}
 void Sphere::TestHitResult(Tool::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const
 {
 	if(hitResult.T < maxT && 
@@ -57,7 +75,7 @@ void Sphere::TestHitResult(Tool::HitResult& hitResult, const Tool::Ray& ray, flo
 	{
 		hitResult.IsHit = true;
 		hitResult.Point = ray.GetPoint(hitResult.T);
-		hitResult.Normal = (hitResult.Point - m_Center) / m_Radius;
+		hitResult.Normal = (hitResult.Point - GetCurrentCenter(ray.GetFireTime())) / m_Radius;
 	}
 }
 

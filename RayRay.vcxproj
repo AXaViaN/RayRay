@@ -31,6 +31,7 @@
     <ClCompile Include="Source\Gfx\Util.cpp" />
     <ClCompile Include="Source\Test\001-EmptyScene.cpp" />
     <ClCompile Include="Source\Test\003-FirstBookTest.cpp" />
+    <ClCompile Include="Source\Test\004-MotionBlur.cpp" />
     <ClCompile Include="Source\Test\RayRayTest.cpp" />
     <ClCompile Include="Source\Test\002-RedSphere.cpp" />
     <ClCompile Include="Source\Utility\File.cpp" />

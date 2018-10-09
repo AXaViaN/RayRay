@@ -19,7 +19,7 @@ Tool::ScatterResult LambertianMaterial::ScatterCheck(const Tool::Ray& ray, const
 	auto target = hitResult.Point + hitResult.Normal + Gfx::Util::GetRandomVectorInUnitSphere();
 	auto targetDirection = (target - hitResult.Point).Normalized();
 
-	scatterResult.ScatterRay = Tool::Ray(hitResult.Point, targetDirection);
+	scatterResult.ScatterRay = Tool::Ray(hitResult.Point, targetDirection, ray.GetFireTime());
 	
 	scatterResult.IsScatter = true;
 	return scatterResult;

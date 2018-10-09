@@ -15,6 +15,11 @@ public:
 	static inline float Cos(float angle);
 	static inline float Tan(float angle);
 
+	template<typename T> static inline T Abs(const T& value);
+
+	template<typename T> static inline T Percentage(const T& start, const T& end, const T& value);
+	template<typename T> static inline T Lerp(const T& start, const T& end, float percentage);
+
 };
 
 /***** IMPLEMENTATION *****/
@@ -41,6 +46,20 @@ inline float Math::Cos(float angle)
 inline float Math::Tan(float angle)
 {
 	return std::tanf(ToRadian(angle));
+}
+
+template<typename T> inline T Math::Abs(const T& value)
+{
+	return std::abs(value);
+}
+
+template<typename T> inline T Math::Percentage(const T& start, const T& end, const T& value)
+{
+	return (value - start) / (end - start);
+}
+template<typename T> inline T Math::Lerp(const T& start, const T& end, float percentage)
+{
+	return start + ((end - start) * percentage);
 }
 
 } // namespace Tool

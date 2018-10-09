@@ -7,11 +7,12 @@
 
 namespace Test {
 
-class FirstBookTest : public Test::RayRayTest
+class MotionBlur : public Test::RayRayTest
 {
 private:
-	Entity::Scene SetupScene()
+	Entity::Scene SetupScene() override
 	{
+		// Moving version of first book (small lambertian balls are moving)
 		Entity::Scene scene;
 		Tool::Random random;
 
@@ -24,9 +25,9 @@ private:
 		// Ground
 		position = {0.0f, -1000.0f, 0.0f};
 		radius = 1000.0f;
-		lambertianMaterial = Asset::LambertianMaterial(Tool::Color{0.75f, 0.75f, 0.75f});
+		metalMaterial = Asset::MetalMaterial(Tool::Color{0.25f, 0.25f, 0.25f}, 0.25f);
 		scene.AddSceneObject(Entity::Sphere(position, radius, 
-											std::make_unique<Asset::LambertianMaterial>(lambertianMaterial)));
+											std::make_unique<Asset::MetalMaterial>(metalMaterial)));
 
 		// Center
 		position = {0.0f, 1.0f, 0.0f};
@@ -63,9 +64,9 @@ private:
 
 		// Random balls
 		radius = 0.2f;
-		for( int x=-18 ; x<11 ; ++x )
+		for( int x=-5 ; x<5 ; ++x )
 		{
-			for( int z=-18 ; z<11 ; ++z )
+			for( int z=-5 ; z<3 ; ++z )
 			{
 				position = {x+0.9f*random.GetFloat(), radius, z+0.9f*random.GetFloat()};
 				if((position-Tool::Vector3f(4.0f, radius, 0.0f)).Length() > 0.9f)
@@ -74,17 +75,22 @@ private:
 					if(chooseMaterial < 0.6f)
 					{
 						Tool::Color color{random.GetFloat()*random.GetFloat(), 
-										  random.GetFloat()*random.GetFloat(), 
-										  random.GetFloat()*random.GetFloat()};
+							random.GetFloat()*random.GetFloat(), 
+							random.GetFloat()*random.GetFloat()};
 						lambertianMaterial = Asset::LambertianMaterial(color);
-						scene.AddSceneObject(Entity::Sphere(position, radius, 
-															std::make_unique<Asset::LambertianMaterial>(lambertianMaterial)));
+						auto sphere = Entity::Sphere(position, radius, 
+													 std::make_unique<Asset::LambertianMaterial>(lambertianMaterial));
+
+						auto moveDirection = Tool::Vector3f{0.0f, 0.5f, 0.0f} * random.GetFloat();
+						sphere.Move(position + moveDirection, 0.0f, 1.0f);
+
+						scene.AddSceneObject(std::move(sphere));
 					}
 					else if(chooseMaterial < 0.85f)
 					{
 						Tool::Color color{random.GetFloat()*random.GetFloat(), 
-										  random.GetFloat()*random.GetFloat(), 
-										  random.GetFloat()*random.GetFloat()};
+							random.GetFloat()*random.GetFloat(), 
+							random.GetFloat()*random.GetFloat()};
 						metalMaterial = Asset::MetalMaterial(color, 0.5f*random.GetFloat());
 						scene.AddSceneObject(Entity::Sphere(position, radius, 
 															std::make_unique<Asset::MetalMaterial>(metalMaterial)));
@@ -102,20 +108,20 @@ private:
 		return scene;
 	}
 
-	Entity::Camera SetupCamera(float aspectRatio)
+	Entity::Camera SetupCamera(float aspectRatio) override
 	{
 		Tool::Vector3f position = {9.0f, 2.0f, 5.0f};
 		Tool::Vector3f lookat = {0.0f, 0.0f, 0.0f};
 		Tool::Vector3f up = {0.0f, 1.0f, 0.0f};
 		float fov = 30.0f;
-		float aperture = 0.1f;
+		float aperture = 0.001f;
 		float focalOffset = 0.0f;
-		float exposureTime = 0.0f;
+		float exposureTime = 1.0f;
 
 		return Entity::Camera(position, lookat, up, fov, aperture, focalOffset, exposureTime, aspectRatio);
 	}
 };
 
-REGISTER_RAYRAYTEST(FirstBookTest, 003);
+REGISTER_RAYRAYTEST(MotionBlur, 004);
 
 } // namespace Test

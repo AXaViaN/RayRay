@@ -6,6 +6,7 @@
 static const std::string ArgvSelectionTag = "-rayraytest=";
 static const std::string OutputFileName = "output";
 static constexpr Tool::Vector2u OutputSize = {200, 100};
+static constexpr size_t ScatterDepth = 15u;
 static constexpr size_t SampleCount = 128u;
 static constexpr size_t ThreadCount = 6u;
 static constexpr float Gamma = 2.2f;
@@ -73,7 +74,7 @@ static void RunSelection(size_t selection)
 	}
 	else
 	{
-		auto output = test->Run(OutputSize, SampleCount, ThreadCount);
+		auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount);
 		output.Save(OutputFileName, Gamma);
 
 		delete test;
@@ -112,7 +113,7 @@ static void RunMenuLoop(const std::vector<Test::RayRayTest::Spawner>& spawners)
 			auto testSpawner = spawners.at(choice-1).Function;
 			auto test = testSpawner();
 
-			auto output = test->Run(OutputSize, SampleCount, ThreadCount);
+			auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount);
 			output.Save(OutputFileName, Gamma);
 
 			std::printf("Render complete\n");

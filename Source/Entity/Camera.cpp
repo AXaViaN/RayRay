@@ -2,15 +2,17 @@
 #include <Gfx/Util.h>
 #include <Tool/Math.h>
 #include <Tool/Ray.h>
+#include <Tool/Random.h>
 
 namespace Entity {
 
 static Gfx::RenderPlane CreateRenderPlane(const Tool::Vector3f& forward, const Tool::Vector3f& up, float fov, float focalOffset, float aspectRatio);
 
-Camera::Camera(const Tool::Vector3f& position, const Tool::Vector3f& lookat, const Tool::Vector3f& up, float fov, float aperture, float focalOffset, float aspectRatio) : 
+Camera::Camera(const Tool::Vector3f& position, const Tool::Vector3f& lookat, const Tool::Vector3f& up, float fov, float aperture, float focalOffset, float exposureTime, float aspectRatio) : 
 	m_RenderPlane(CreateRenderPlane(position-lookat, up, fov, focalOffset, aspectRatio)),
 	m_Position(position),
-	m_LensRadius(aperture / 2.0f)
+	m_LensRadius(aperture / 2.0f),
+	m_ExposureTime(exposureTime)
 {
 }
 
@@ -22,7 +24,9 @@ Tool::Ray Camera::GetRay(const Tool::Vector2f& uv) const
 	auto offset = m_RenderPlane.Right * randomLensDirection.X + 
 				  m_RenderPlane.Up    * randomLensDirection.Y;
 
-	return Tool::Ray(m_Position+offset, rayDirection-offset);
+	float fireTime = Tool::Random::Instance().GetFloat(0.0f, m_ExposureTime);
+
+	return Tool::Ray(m_Position+offset, rayDirection-offset, fireTime);
 }
 
 /***** STATIC FUNCTION *****/
