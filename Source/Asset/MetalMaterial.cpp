@@ -16,7 +16,11 @@ MetalMaterial::MetalMaterial(const Tool::Color& color, float fuzziness) :
 Tool::ScatterResult MetalMaterial::ScatterCheck(const Tool::Ray& ray, const Tool::HitResult& hitResult) const
 {
 	Tool::ScatterResult scatterResult;
-	scatterResult.ObjectColor = m_Color;
+
+	auto albedoColor = GetAlbedoColor({0.0f, 0.0f}, hitResult.Point);
+	scatterResult.ObjectColor = {m_Color.R * albedoColor.R,
+								 m_Color.G * albedoColor.G,
+								 m_Color.B * albedoColor.B};
 
 	// Reflect the ray direction and add randomness for fuzzy looks
 	auto reflectedVector = Gfx::Util::Reflect(ray.GetDirection().Normalized(), hitResult.Normal);

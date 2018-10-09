@@ -13,7 +13,11 @@ LambertianMaterial::LambertianMaterial(const Tool::Color& color) :
 Tool::ScatterResult LambertianMaterial::ScatterCheck(const Tool::Ray& ray, const Tool::HitResult& hitResult) const
 {
 	Tool::ScatterResult scatterResult;
-	scatterResult.ObjectColor = m_Color;
+
+	auto albedoColor = GetAlbedoColor({0.0f, 0.0f}, hitResult.Point);
+	scatterResult.ObjectColor = {m_Color.R * albedoColor.R,
+								 m_Color.G * albedoColor.G,
+								 m_Color.B * albedoColor.B};
 
 	// Select a random reflection direction
 	auto target = hitResult.Point + hitResult.Normal + Gfx::Util::GetRandomVectorInUnitSphere();

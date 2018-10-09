@@ -10,6 +10,7 @@ class Math
 public:
 	static inline float Pi();
 	static inline float ToRadian(float angle);
+	static inline float ToAngle(float radian);
 
 	static inline float Sin(float angle);
 	static inline float Cos(float angle);
@@ -33,6 +34,11 @@ inline float Math::ToRadian(float angle)
 {
 	static const float factor = Pi() / 180.0f;
 	return angle * factor;
+}
+inline float Math::ToAngle(float radian)
+{
+	static const float factor = Pi() / 180.0f;
+	return radian / factor;
 }
 
 inline float Math::Sin(float angle)

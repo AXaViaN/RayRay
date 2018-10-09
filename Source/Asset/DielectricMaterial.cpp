@@ -14,8 +14,10 @@ DielectricMaterial::DielectricMaterial(float refractiveIndex) :
 Tool::ScatterResult DielectricMaterial::ScatterCheck(const Tool::Ray& ray, const Tool::HitResult& hitResult) const
 {
 	Tool::ScatterResult scatterResult;
-	scatterResult.ObjectColor = {1.0f, 1.0f, 1.0f};
 	scatterResult.IsScatter = true;
+
+	auto albedoColor = GetAlbedoColor({0.0f, 0.0f}, hitResult.Point);
+	scatterResult.ObjectColor = albedoColor;
 
 	// We want to refract. So we are calculating from air to inside of the material
 	Tool::Vector3f outwardNormal = hitResult.Normal;

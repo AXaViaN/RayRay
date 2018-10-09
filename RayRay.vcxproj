@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Asset\CheckerTexture.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
     <ClCompile Include="Source\Asset\DielectricMaterial.cpp" />
     <ClCompile Include="Source\Asset\LambertianMaterial.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="Source\Test\001-EmptyScene.cpp" />
     <ClCompile Include="Source\Test\003-FirstBookTest.cpp" />
     <ClCompile Include="Source\Test\004-MotionBlur.cpp" />
+    <ClCompile Include="Source\Test\005-Texture.cpp" />
     <ClCompile Include="Source\Test\RayRayTest.cpp" />
     <ClCompile Include="Source\Test\002-RedSphere.cpp" />
     <ClCompile Include="Source\Utility\File.cpp" />
@@ -39,6 +41,8 @@
     <ClCompile Include="Source\Utility\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Asset\CheckerTexture.h" />
+    <ClInclude Include="Source\Asset\Texture.h" />
     <ClInclude Include="Source\Entity\Camera.h" />
     <ClInclude Include="Source\Asset\DielectricMaterial.h" />
     <ClInclude Include="Source\Asset\LambertianMaterial.h" />

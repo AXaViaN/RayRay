@@ -2,6 +2,7 @@
 #include <Asset/LambertianMaterial.h>
 #include <Asset/MetalMaterial.h>
 #include <Asset/DielectricMaterial.h>
+#include <Asset/CheckerTexture.h>
 #include <Entity/Sphere.h>
 #include <Tool/Random.h>
 
@@ -21,11 +22,14 @@ private:
 		Asset::LambertianMaterial lambertianMaterial({});
 		Asset::MetalMaterial metalMaterial({}, 0);
 		Asset::DielectricMaterial dielectricMaterial(0);
+		auto checkerTexture = std::make_shared<Asset::CheckerTexture>(Tool::Color{0.1f, 0.25f, 0.5f}, 
+																	  Tool::Color{0.35f, 0.45f, 0.65f});
 
 		// Ground
 		position = {0.0f, -1000.0f, 0.0f};
 		radius = 1000.0f;
-		metalMaterial = Asset::MetalMaterial(Tool::Color{0.25f, 0.25f, 0.25f}, 0.25f);
+		metalMaterial = Asset::MetalMaterial(Tool::Color{0.75f, 0.75f, 0.75f}, 0.25f);
+		metalMaterial.SetAlbedoTexture(checkerTexture);
 		scene.AddSceneObject(Entity::Sphere(position, radius, 
 											std::make_unique<Asset::MetalMaterial>(metalMaterial)));
 
