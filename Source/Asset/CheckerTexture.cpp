@@ -3,25 +3,26 @@
 
 namespace Asset {
 
-CheckerTexture::CheckerTexture(const Tool::Color& first, const Tool::Color& second) : 
-	m_First(first),
-	m_Second(second)
+CheckerTexture::CheckerTexture(const Tool::Color& firstColor, const Tool::Color& secondColor, float cellSize) : 
+	m_FirstColor(firstColor),
+	m_SecondColor(secondColor),
+	m_CellSize(cellSize / Tool::Math::Pi())
 {
 }
 
 Tool::Color CheckerTexture::GetColor(const Tool::Vector2f& uv, const Tool::Vector3f& position) const
 {
-	float sines = Tool::Math::Sin(Tool::Math::ToAngle(10.0f * position.X)) * 
-				  Tool::Math::Sin(Tool::Math::ToAngle(10.0f * position.Y)) * 
-				  Tool::Math::Sin(Tool::Math::ToAngle(10.0f * position.Z));
+	float sines = Tool::Math::SinRadian(position.X / m_CellSize) * 
+				  Tool::Math::SinRadian(position.Y / m_CellSize) * 
+				  Tool::Math::SinRadian(position.Z / m_CellSize);
 
 	if(sines > 0)
 	{
-		return m_First;
+		return m_FirstColor;
 	}
 	else
 	{
-		return m_Second;
+		return m_SecondColor;
 	}
 }
 

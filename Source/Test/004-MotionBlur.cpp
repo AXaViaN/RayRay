@@ -23,7 +23,8 @@ private:
 		Asset::MetalMaterial metalMaterial({}, 0);
 		Asset::DielectricMaterial dielectricMaterial(0);
 		auto checkerTexture = std::make_shared<Asset::CheckerTexture>(Tool::Color{0.1f, 0.25f, 0.5f}, 
-																	  Tool::Color{0.35f, 0.45f, 0.65f});
+																	  Tool::Color{0.35f, 0.45f, 0.65f},
+																	  0.3f);
 
 		// Ground
 		position = {0.0f, -1000.0f, 0.0f};

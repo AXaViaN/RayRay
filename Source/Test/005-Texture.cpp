@@ -12,8 +12,10 @@ private:
 	{
 		Entity::Scene scene;
 
+		float checkerCellSize = 1.0f;
 		auto checkerTexture = std::make_shared<Asset::CheckerTexture>(Tool::Color{0.1f, 0.25f, 0.5f}, 
-																	  Tool::Color{0.35f, 0.45f, 0.65f});
+																	  Tool::Color{0.35f, 0.45f, 0.65f}, 
+																	  checkerCellSize);
 
 		auto position = Tool::Vector3f{0.0f, -1000.0f, 0.0f};
 		auto radius = 1000.0f;

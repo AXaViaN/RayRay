@@ -15,6 +15,9 @@ public:
 	static inline float Sin(float angle);
 	static inline float Cos(float angle);
 	static inline float Tan(float angle);
+	static inline float SinRadian(float radian);
+	static inline float CosRadian(float radian);
+	static inline float TanRadian(float radian);
 
 	template<typename T> static inline T Abs(const T& value);
 
@@ -52,6 +55,18 @@ inline float Math::Cos(float angle)
 inline float Math::Tan(float angle)
 {
 	return std::tanf(ToRadian(angle));
+}
+inline float Math::SinRadian(float radian)
+{
+	return std::sinf(radian);
+}
+inline float Math::CosRadian(float radian)
+{
+	return std::cosf(radian);
+}
+inline float Math::TanRadian(float radian)
+{
+	return std::tanf(radian);
 }
 
 template<typename T> inline T Math::Abs(const T& value)
