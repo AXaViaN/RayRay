@@ -8,6 +8,10 @@ namespace Tool {
 class Math
 {
 public:
+	template<typename T> static inline T Abs(const T& value);
+	template<typename T> static inline T Min(const T& value1, const T& value2);
+	template<typename T> static inline T Max(const T& value1, const T& value2);
+
 	static inline float Pi();
 	static inline float ToRadian(float angle);
 	static inline float ToAngle(float radian);
@@ -19,14 +23,25 @@ public:
 	static inline float CosRadian(float radian);
 	static inline float TanRadian(float radian);
 
-	template<typename T> static inline T Abs(const T& value);
-
 	template<typename T> static inline T Percentage(const T& start, const T& end, const T& value);
 	template<typename T> static inline T Lerp(const T& start, const T& end, float percentage);
 
 };
 
 /***** IMPLEMENTATION *****/
+
+template<typename T> inline T Math::Abs(const T& value)
+{
+	return std::abs(value);
+}
+template<typename T> inline T Math::Min(const T& value1, const T& value2)
+{
+	return (value1 < value2) ? value1 : value2;
+}
+template<typename T> inline T Math::Max(const T& value1, const T& value2)
+{
+	return (value1 > value2) ? value1 : value2;
+}
 
 inline float Math::Pi()
 {
@@ -67,11 +82,6 @@ inline float Math::CosRadian(float radian)
 inline float Math::TanRadian(float radian)
 {
 	return std::tanf(radian);
-}
-
-template<typename T> inline T Math::Abs(const T& value)
-{
-	return std::abs(value);
 }
 
 template<typename T> inline T Math::Percentage(const T& start, const T& end, const T& value)

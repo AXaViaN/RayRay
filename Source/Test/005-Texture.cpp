@@ -10,7 +10,9 @@ class Texture : public Test::RayRayTest
 private:
 	Entity::Scene SetupScene() override
 	{
-		Entity::Scene scene;
+		float sceneStartTime = 0.0f;
+		float sceneEndTime = 0.0f;
+		Entity::Scene scene(sceneStartTime, sceneEndTime);
 
 		float checkerCellSize = 1.0f;
 		auto checkerTexture = std::make_shared<Asset::CheckerTexture>(Tool::Color{0.1f, 0.25f, 0.5f}, 

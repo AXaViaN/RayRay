@@ -1,4 +1,5 @@
 #include <Entity/Sphere.h>
+#include <Tool/AABB.h>
 #include <Tool/Ray.h>
 #include <Tool/HitResult.h>
 #include <Tool/Math.h>
@@ -12,13 +13,29 @@ Sphere::Sphere(const Tool::Vector3f& center, float radius, std::unique_ptr<Asset
 	Material = std::move(material);
 }
 
-void Sphere::Move(const Tool::Vector3f& target, float t0, float t1)
+bool Sphere::CreateAABB(Tool::AABB& aabb, float startTime, float endTime) const
 {
-	m_MoveData.Target = target;
-	m_MoveData.StartTime = t0;
-	m_MoveData.EndTime = t1;
-}
+	// SurroundingBox of the whole movement
 
+	auto boxMin = GetCurrentCenter(startTime) - Tool::Vector3f(m_Radius, m_Radius, m_Radius);
+	auto boxMax = GetCurrentCenter(startTime) + Tool::Vector3f(m_Radius, m_Radius, m_Radius);
+	if(m_Radius < 0.0f)
+	{
+		std::swap(boxMin, boxMax);
+	}
+	auto box1 = Tool::AABB(boxMin, boxMax);
+
+	boxMin = GetCurrentCenter(endTime) - Tool::Vector3f(m_Radius, m_Radius, m_Radius);
+	boxMax = GetCurrentCenter(endTime) + Tool::Vector3f(m_Radius, m_Radius, m_Radius);
+	if(m_Radius < 0.0f)
+	{
+		std::swap(boxMin, boxMax);
+	}
+	auto box2 = Tool::AABB(boxMin, boxMax);
+
+	aabb = Tool::AABB(box1, box2);
+	return true;
+}
 Tool::HitResult Sphere::HitCheck(const Tool::Ray& ray, float minT, float maxT) const
 {
 	Tool::HitResult hitResult;

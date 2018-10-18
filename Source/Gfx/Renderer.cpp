@@ -1,6 +1,7 @@
 #include <Gfx/Renderer.h>
 #include <Entity/Camera.h>
 #include <Entity/Scene.h>
+#include <Entity/BVHNode.h>
 #include <Tool/Ray.h>
 #include <Tool/HitResult.h>
 #include <Tool/ScatterResult.h>
@@ -13,7 +14,7 @@ namespace Gfx {
 
 struct SampleData
 {
-	const Entity::Scene& Scene;
+	const Entity::BVHNode& SceneBVH;
 	const Entity::Camera& Camera;
 	const size_t ScatterDepth;
 
@@ -26,7 +27,7 @@ struct SampleData
 };
 
 static void GetSampleTexture(const SampleData& data);
-static Tool::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, size_t scatterDepth);
+static Tool::Color GetColor(const Entity::BVHNode& SceneBVH, const Tool::Ray& ray, size_t scatterDepth);
 static Tool::Color GetBackgroundColor(const Tool::Ray& ray);
 
 Renderer::Renderer(const Tool::Vector2u& outputSize, size_t sampleCount, size_t threadCount) : 
@@ -44,13 +45,14 @@ Utility::Texture Renderer::RenderScene(const Entity::Scene& scene, const Entity:
 	};
 	size_t sampleCount = sampleSize.X * sampleSize.Y;
 
+	auto sceneBVH = scene.GetBVHRoot();
 	Utility::Texture output(m_OutputSize);
 	std::mutex outputMutex;
 
 	// Get samples
 	std::vector<std::thread> threads(m_ThreadCount);
 	size_t threadIdx = 0;
-	SampleData sampleData = {scene, camera, scatterDepth, output, outputMutex, sampleCount, m_OutputSize};
+	SampleData sampleData = {sceneBVH, camera, scatterDepth, output, outputMutex, sampleCount, m_OutputSize};
 	Tool::Vector2u sampleOffset;
 	for( sampleOffset.Y=0 ; sampleOffset.Y<sampleSize.Y ; ++sampleOffset.Y )
 	{
@@ -100,7 +102,7 @@ static void GetSampleTexture(const SampleData& data)
 			};
 
 			Tool::Ray ray = data.Camera.GetRay(uv);
-			Tool::Color color = GetColor(data.Scene, ray, data.ScatterDepth);
+			Tool::Color color = GetColor(data.SceneBVH, ray, data.ScatterDepth);
 
 			std::unique_lock<std::mutex> lock(data.OutputMutex);
 			auto currentColor = data.OutputTexture.GetPixel(position);
@@ -114,10 +116,10 @@ static void GetSampleTexture(const SampleData& data)
 	}
 }
 
-static Tool::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, size_t scatterDepth)
+static Tool::Color GetColor(const Entity::BVHNode& sceneBVH, const Tool::Ray& ray, size_t scatterDepth)
 {
-	// Hit the ray to a scene object
-	auto hitResult = scene.HitCheck(ray, 0.001f, std::numeric_limits<float>::max());
+	// Hit the ray to scene
+	auto hitResult = sceneBVH.HitCheck(ray, 0.001f, std::numeric_limits<float>::max());
 	if(hitResult.IsHit)
 	{
 		Tool::Color color;
@@ -128,7 +130,7 @@ static Tool::Color GetColor(const Entity::Scene& scene, const Tool::Ray& ray, si
 			auto scatterResult = hitResult.Object->Material->ScatterCheck(ray, hitResult);
 			if(scatterResult.IsScatter)
 			{
-				auto scatterColor = GetColor(scene, scatterResult.ScatterRay, scatterDepth-1);
+				auto scatterColor = GetColor(sceneBVH, scatterResult.ScatterRay, scatterDepth-1);
 
 				color = {scatterResult.ObjectColor.R * scatterColor.R,
 						 scatterResult.ObjectColor.G * scatterColor.G,

@@ -12,7 +12,9 @@ class FirstBookTest : public Test::RayRayTest
 private:
 	Entity::Scene SetupScene()
 	{
-		Entity::Scene scene;
+		float sceneStartTime = 0.0f;
+		float sceneEndTime = 0.0f;
+		Entity::Scene scene(sceneStartTime, sceneEndTime);
 		Tool::Random random;
 
 		Tool::Vector3f position;

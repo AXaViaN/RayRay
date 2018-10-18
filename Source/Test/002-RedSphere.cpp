@@ -9,7 +9,9 @@ class RedSphere : public Test::RayRayTest
 private:
 	Entity::Scene SetupScene() override
 	{
-		Entity::Scene scene;
+		float sceneStartTime = 0.0f;
+		float sceneEndTime = 0.0f;
+		Entity::Scene scene(sceneStartTime, sceneEndTime);
 
 		Tool::Vector3f position = {0.0f, 0.0f, -2.0f};
 		float radius = 1.0f;

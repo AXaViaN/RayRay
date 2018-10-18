@@ -7,7 +7,10 @@ class EmptyScene : public Test::RayRayTest
 private:
 	Entity::Scene SetupScene() override
 	{
-		Entity::Scene scene;
+		float sceneStartTime = 0.0f;
+		float sceneEndTime = 0.0f;
+		Entity::Scene scene(sceneStartTime, sceneEndTime);
+
 		return scene;
 	}
 

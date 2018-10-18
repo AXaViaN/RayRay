@@ -12,6 +12,7 @@ static std::vector<RayRayTest::Spawner>& s_SpawnerList()
 }
 
 RayRayTest::RayRayTest() : 
+	m_Scene(0, 0),
 	m_Camera({}, {}, {}, 0, 0, 0, 0, 0)
 {
 }

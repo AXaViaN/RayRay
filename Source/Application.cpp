@@ -5,9 +5,9 @@
 
 static const std::string ArgvSelectionTag = "-rayraytest=";
 static const std::string OutputFileName = "output";
-static constexpr Tool::Vector2u OutputSize = {200, 100};
+static constexpr Tool::Vector2u OutputSize = {640, 360};
 static constexpr size_t ScatterDepth = 15u;
-static constexpr size_t SampleCount = 128u;
+static constexpr size_t SampleCount = 16u;
 static constexpr size_t ThreadCount = 6u;
 static constexpr float Gamma = 2.2f;
 

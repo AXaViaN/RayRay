@@ -14,7 +14,9 @@ private:
 	Entity::Scene SetupScene() override
 	{
 		// Moving version of first book (small lambertian balls are moving)
-		Entity::Scene scene;
+		float sceneStartTime = 0.0f;
+		float sceneEndTime = 1.0f;
+		Entity::Scene scene(sceneStartTime, sceneEndTime);
 		Tool::Random random;
 
 		Tool::Vector3f position;
@@ -87,7 +89,7 @@ private:
 													 std::make_unique<Asset::LambertianMaterial>(lambertianMaterial));
 
 						auto moveDirection = Tool::Vector3f{0.0f, 0.5f, 0.0f} * random.GetFloat();
-						sphere.Move(position + moveDirection, 0.0f, 1.0f);
+						sphere.Move({position + moveDirection, 0.0f, 1.0f});
 
 						scene.AddSceneObject(std::move(sphere));
 					}

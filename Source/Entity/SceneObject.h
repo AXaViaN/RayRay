@@ -5,6 +5,7 @@
 #include <memory>
 
 namespace Tool {
+	class AABB;
 	class Ray;
 	class HitResult;
 }
@@ -14,6 +15,7 @@ namespace Entity {
 class SceneObject
 {
 public:
+	virtual bool CreateAABB(Tool::AABB& aabb, float startTime, float endTime) const = 0;
 	virtual Tool::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const = 0;
 
 public:
