@@ -10,6 +10,9 @@ using Vector2u = Vector2<unsigned int>;
 template<typename T> class Vector2
 {
 public:
+	using Type = T;
+
+public:
 	T X = 0;
 	T Y = 0;
 

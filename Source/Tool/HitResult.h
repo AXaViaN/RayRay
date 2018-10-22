@@ -1,6 +1,7 @@
 #ifndef TOOL__HIT_RESULT
 #define TOOL__HIT_RESULT
 
+#include <Tool/Vector2.h>
 #include <Tool/Vector3.h>
 
 namespace Entity {
@@ -16,6 +17,7 @@ public:
 
 	Tool::Vector3f Point;
 	Tool::Vector3f Normal;
+	Tool::Vector2f UV;
 	float T = 0;
 
 	bool IsHit = false;

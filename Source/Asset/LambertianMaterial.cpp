@@ -14,7 +14,7 @@ Tool::ScatterResult LambertianMaterial::ScatterCheck(const Tool::Ray& ray, const
 {
 	Tool::ScatterResult scatterResult;
 
-	auto albedoColor = GetAlbedoColor({0.0f, 0.0f}, hitResult.Point);
+	auto albedoColor = GetAlbedoColor(hitResult.UV, hitResult.Point);
 	scatterResult.ObjectColor = {m_Color.R * albedoColor.R,
 								 m_Color.G * albedoColor.G,
 								 m_Color.B * albedoColor.B};

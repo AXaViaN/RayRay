@@ -11,6 +11,9 @@ using Vector3f = Vector3<float>;
 template<typename T> class Vector3
 {
 public:
+	using Type = T;
+
+public:
 	inline Vector3();
 	inline Vector3(T x, T y, T z);
 	static const Vector3 Up;

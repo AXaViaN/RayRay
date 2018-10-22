@@ -22,6 +22,10 @@ public:
 	static inline float SinRadian(float radian);
 	static inline float CosRadian(float radian);
 	static inline float TanRadian(float radian);
+	static inline float ArcSin(float x);
+	static inline float ArcCos(float x);
+	static inline float ArcTan(float x);
+	static inline float ArcTan(float y, float x);
 
 	template<typename T> static inline T Percentage(const T& start, const T& end, const T& value);
 	template<typename T> static inline T Lerp(const T& start, const T& end, float percentage);
@@ -82,6 +86,22 @@ inline float Math::CosRadian(float radian)
 inline float Math::TanRadian(float radian)
 {
 	return std::tanf(radian);
+}
+inline float Math::ArcSin(float x)
+{
+	return ToAngle(std::asin(x));
+}
+inline float Math::ArcCos(float x)
+{
+	return ToAngle(std::acos(x));
+}
+inline float Math::ArcTan(float x)
+{
+	return ToAngle(std::atan(x));
+}
+inline float Math::ArcTan(float y, float x)
+{
+	return ToAngle(std::atan2(y, x));
 }
 
 template<typename T> inline T Math::Percentage(const T& start, const T& end, const T& value)
