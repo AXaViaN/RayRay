@@ -18,7 +18,7 @@ public:
 	};
 
 public:
-	Sphere(const Tool::Vector3f& center, float radius, std::unique_ptr<Asset::Material>&& material);
+	Sphere(const Tool::Vector3f& center, float radius, std::shared_ptr<Asset::Material> material);
 
 	inline void Move(const MoveData& moveData);
 

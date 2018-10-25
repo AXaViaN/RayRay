@@ -19,7 +19,7 @@ public:
 	virtual Tool::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const = 0;
 
 public:
-	std::unique_ptr<Asset::Material> Material;
+	std::shared_ptr<Asset::Material> Material;
 
 };
 

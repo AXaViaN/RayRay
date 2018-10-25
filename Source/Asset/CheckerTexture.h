@@ -6,7 +6,7 @@
 
 namespace Asset {
 
-class CheckerTexture : public Texture
+class CheckerTexture : public Asset::Texture
 {
 public:
 	CheckerTexture(const Tool::Color& firstColor, const Tool::Color& secondColor, float cellSize);

@@ -1,13 +1,14 @@
 #include <Test/RayRayTest.h>
 #include <Tool/Vector2.h>
+#include <Tool/Timer.h>
 #include <string>
 #include <cstdio>
 
 static const std::string ArgvSelectionTag = "-rayraytest=";
 static const std::string OutputFileName = "output";
-static constexpr Tool::Vector2u OutputSize = {640, 360};
+static constexpr Tool::Vector2u OutputSize = {1600, 900};
 static constexpr size_t ScatterDepth = 15u;
-static constexpr size_t SampleCount = 16u;
+static constexpr size_t SampleCount = 4u;
 static constexpr size_t ThreadCount = 6u;
 static constexpr float Gamma = 2.2f;
 
@@ -113,10 +114,10 @@ static void RunMenuLoop(const std::vector<Test::RayRayTest::Spawner>& spawners)
 			auto testSpawner = spawners.at(choice-1).Function;
 			auto test = testSpawner();
 
+			Tool::ScopedTimer timer("Render completed in %time sec.\n");
 			auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount);
 			output.Save(OutputFileName, Gamma);
 
-			std::printf("Render complete\n");
 			delete test;
 		}
 		else if(choice == 0)

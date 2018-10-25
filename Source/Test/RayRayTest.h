@@ -40,6 +40,8 @@ private:
 
 };
 
+/***** IMPLEMENTATION *****/
+
 struct RayRayTest::Spawner
 {
 	size_t Index;

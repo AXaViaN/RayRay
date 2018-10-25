@@ -19,8 +19,8 @@ public:
 	virtual bool CreateAABB(Tool::AABB& aabb, float startTime, float endTime) const override;
 	virtual Tool::HitResult HitCheck(const Tool::Ray& ray, float minT, float maxT) const override;
 
-	template<typename T> inline void AddSceneObject(T&& object);
-	template<typename T> inline void AddSceneObject(const T& object);
+	template<typename T> inline void AddSceneObject(T sceneObject);
+	template<typename T, typename... Args> inline void AddSceneObject(Args... args);
 
 	Entity::BVHNode GetBVHRoot() const;
 
@@ -39,13 +39,13 @@ inline Scene::Scene(float startTime, float endTime) :
 {
 }
 
-template<typename T> inline void Scene::AddSceneObject(T&& object)
+template<typename T> inline void Scene::AddSceneObject(T sceneObject)
 {
-	m_SceneObjects.push_back(std::make_shared<T>(std::move(object)));
+	m_SceneObjects.emplace_back(std::make_shared<T>(std::move(sceneObject)));
 }
-template<typename T> inline void Scene::AddSceneObject(const T& object)
+template<typename T, typename... Args> inline void Scene::AddSceneObject(Args... args)
 {
-	m_SceneObjects.push_back(std::make_shared<T>(object));
+	m_SceneObjects.emplace_back(std::make_shared<T>(args...));
 }
 
 } // namespace Entity

@@ -3,10 +3,11 @@
 #include <Tool/Ray.h>
 #include <Tool/HitResult.h>
 #include <Tool/Math.h>
+#include <algorithm>
 
 namespace Entity {
 
-Sphere::Sphere(const Tool::Vector3f& center, float radius, std::unique_ptr<Asset::Material>&& material) : 
+Sphere::Sphere(const Tool::Vector3f& center, float radius, std::shared_ptr<Asset::Material> material) : 
 	m_Center(center),
 	m_Radius(radius)
 {
@@ -83,6 +84,8 @@ Tool::Vector3f Sphere::GetCurrentCenter(float time) const
 	}
 
 	float percentage = Tool::Math::Percentage(m_MoveData.StartTime, m_MoveData.EndTime, time);
+	percentage = std::clamp(percentage, 0.0f, 1.0f);
+
 	return Tool::Math::Lerp(m_Center, m_MoveData.Target, percentage);
 }
 void Sphere::TestHitResult(Tool::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const
