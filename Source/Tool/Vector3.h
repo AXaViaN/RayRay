@@ -7,6 +7,7 @@ namespace Tool {
 
 template<typename T> class Vector3;
 using Vector3f = Vector3<float>;
+using Vector3u = Vector3<unsigned int>;
 
 template<typename T> class Vector3
 {
@@ -36,6 +37,8 @@ public:
 	inline Vector3 operator-(const Vector3& other) const;
 	inline Vector3 operator*(const Vector3& other) const;
 	inline Vector3 operator/(const Vector3& other) const;
+	inline Vector3 operator+(T t) const;
+	inline Vector3 operator-(T t) const;
 	inline Vector3 operator*(T t) const;
 	inline Vector3 operator/(T t) const;
 
@@ -128,6 +131,14 @@ template<typename T> inline Vector3<T> Vector3<T>::operator*(const Vector3<T>& o
 template<typename T> inline Vector3<T> Vector3<T>::operator/(const Vector3<T>& other) const
 {
 	return {X/other.X, Y/other.Y, Z/other.Z};
+}
+template<typename T> inline Vector3<T> Vector3<T>::operator+(T t) const
+{
+	return {X+t, Y+t, Z+t};
+}
+template<typename T> inline Vector3<T> Vector3<T>::operator-(T t) const
+{
+	return {X-t, Y-t, Z-t};
 }
 template<typename T> inline Vector3<T> Vector3<T>::operator*(T t) const
 {

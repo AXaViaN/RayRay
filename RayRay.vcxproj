@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Asset\CheckerTexture.cpp" />
     <ClCompile Include="Source\Asset\ImageTexture.cpp" />
+    <ClCompile Include="Source\Asset\NoiseTexture.cpp" />
     <ClCompile Include="Source\Entity\BVHNode.cpp" />
     <ClCompile Include="Source\Entity\Camera.cpp" />
     <ClCompile Include="Source\Asset\DielectricMaterial.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Source\Test\RayRayTest.cpp" />
     <ClCompile Include="Source\Test\002-RedSphere.cpp" />
     <ClCompile Include="Source\Tool\AABB.cpp" />
+    <ClCompile Include="Source\Tool\Perlin.cpp" />
     <ClCompile Include="Source\Utility\File.cpp" />
     <ClCompile Include="Source\Utility\Texture.cpp" />
     <ClCompile Include="Source\Utility\Util.cpp" />
@@ -47,6 +49,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Asset\CheckerTexture.h" />
     <ClInclude Include="Source\Asset\ImageTexture.h" />
+    <ClInclude Include="Source\Asset\NoiseTexture.h" />
     <ClInclude Include="Source\Asset\Texture.h" />
     <ClInclude Include="Source\Entity\BVHNode.h" />
     <ClInclude Include="Source\Entity\Camera.h" />
@@ -64,6 +67,7 @@
     <ClInclude Include="Source\Test\RayRayTest.h" />
     <ClInclude Include="Source\Tool\AABB.h" />
     <ClInclude Include="Source\Tool\Math.h" />
+    <ClInclude Include="Source\Tool\Perlin.h" />
     <ClInclude Include="Source\Tool\Timer.h" />
     <ClInclude Include="Source\Utility\File.h" />
     <ClInclude Include="Source\Utility\Texture.h" />

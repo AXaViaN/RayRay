@@ -2,6 +2,7 @@
 #include <Asset/LambertianMaterial.h>
 #include <Asset/CheckerTexture.h>
 #include <Asset/ImageTexture.h>
+#include <Asset/NoiseTexture.h>
 #include <Entity/Sphere.h>
 
 namespace Test {
@@ -15,36 +16,71 @@ private:
 		auto sceneEndTime = 0.0f;
 		auto scene = Entity::Scene(sceneStartTime, sceneEndTime);
 
+		auto materials = std::vector<std::shared_ptr<Asset::Material>>();
+
 		// Checker texture
-		auto checkerMaterial = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
 		{
+			auto material = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
+
 			auto firstColor = Tool::Color{0.1f, 0.25f, 0.5f};
 			auto secondColor = Tool::Color{0.35f, 0.45f, 0.65f};
 			auto cellSize = 0.5f;
 
 			auto texture = std::make_shared<Asset::CheckerTexture>(firstColor, secondColor, cellSize);
-			checkerMaterial->SetAlbedoTexture(texture);
+			material->SetAlbedoTexture(texture);
+
+			materials.emplace_back(std::move(material));
 		}
 
 		// Image texture
-		auto earthMaterial = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
 		{
+			auto material = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
+
 			auto texture = std::make_shared<Asset::ImageTexture>("Data/earthmap.jpg");
-			earthMaterial->SetAlbedoTexture(texture);
+			material->SetAlbedoTexture(texture);
+
+			materials.emplace_back(std::move(material));
 		}
 
-		// Left sphere
+		// Camouflage texture
 		{
-			auto position = Tool::Vector3f{-5.0f, 0.0f, 0.0f};
-			auto radius = 3.0f;
-			scene.AddSceneObject<Entity::Sphere>(position, radius, earthMaterial);
+			auto material = std::make_shared<Asset::LambertianMaterial>(Tool::Color{0.05f, 0.85f, 1.0f});
+
+			auto type = Asset::NoiseTexture::NoiseType::Camouflage;
+			auto color = Tool::Color{0.0f, 0.0f, 0.0f};
+			auto scale = 2.0f;
+
+			auto texture = std::make_shared<Asset::NoiseTexture>(type, color, scale);
+			material->SetAlbedoTexture(texture);
+
+			materials.emplace_back(std::move(material));
 		}
-		
-		// Right sphere
+
+		// Marble texture
 		{
-			auto position = Tool::Vector3f{5.0f, 0.0f, 0.0f};
-			auto radius = 3.0f;
-			scene.AddSceneObject<Entity::Sphere>(position, radius, checkerMaterial);
+			auto material = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
+
+			auto type = Asset::NoiseTexture::NoiseType::Marble;
+			auto color = Tool::Color{0.05f, 0.05f, 0.1f};
+			auto scale = 7.0f;
+
+			auto texture = std::make_shared<Asset::NoiseTexture>(type, color, scale);
+			material->SetAlbedoTexture(texture);
+
+			materials.emplace_back(std::move(material));
+		}
+
+		// One sphere for all materials
+		auto radius = 3.0f;
+		auto offset = 1.0f;
+		for( auto i=0u ; i<materials.size() ; ++i )
+		{
+			auto totalSize = (materials.size() * radius*2.0f) + ((materials.size()-1u) * offset);
+			auto leftPosX = - totalSize/2.0f + radius;
+			auto posX = leftPosX + (radius*2.0f + offset)*i;
+
+			auto position = Tool::Vector3f{posX, 0.0f, 0.0f};
+			scene.AddSceneObject<Entity::Sphere>(position, radius, materials.at(i));
 		}
 
 		return scene;
@@ -52,7 +88,7 @@ private:
 
 	Entity::Camera SetupCamera(float aspectRatio) override
 	{
-		auto position		=	Tool::Vector3f{0.0f, 0.0f, 20.0f};
+		auto position		=	Tool::Vector3f{0.0f, 0.0f, 30.0f};
 		auto lookat			=	Tool::Vector3f{0.0f, 0.0f, 0.0f};
 		auto up				=	Tool::Vector3f{0.0f, 1.0f, 0.0f};
 		auto fov			=	30.0f;

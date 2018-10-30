@@ -9,6 +9,7 @@ class Math
 {
 public:
 	template<typename T> static inline T Abs(const T& value);
+	template<typename T> static inline T Floor(const T& value);
 	template<typename T> static inline T Min(const T& value1, const T& value2);
 	template<typename T> static inline T Max(const T& value1, const T& value2);
 
@@ -37,6 +38,10 @@ public:
 template<typename T> inline T Math::Abs(const T& value)
 {
 	return std::abs(value);
+}
+template<typename T> inline T Math::Floor(const T& value)
+{
+	return std::floor(value);
 }
 template<typename T> inline T Math::Min(const T& value1, const T& value2)
 {
