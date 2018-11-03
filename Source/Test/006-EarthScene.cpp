@@ -1,6 +1,8 @@
 #include <Test/RayRayTest.h>
 #include <Asset/LambertianMaterial.h>
 #include <Asset/MetalMaterial.h>
+#include <Asset/CheckerTexture.h>
+#include <Asset/CubemapTexture.h>
 #include <Asset/ImageTexture.h>
 #include <Entity/Sphere.h>
 #include <Test/000-BookScenes.h>
@@ -13,6 +15,32 @@ private:
 	Entity::Scene SetupScene()
 	{
 		auto firstBookScene = BookScenes::CreateFirstBookScene(-45, 9, -9, 40);
+
+		// Add checker texture for the ground
+		{
+			auto position = Tool::Vector3f{0.0f, -5000.0f, 0.0f};
+			auto radius = 5000.01f; // 5000 for checker seams, .01 for putting it up
+			auto fuzziness = 0.75f;
+			auto material = std::make_shared<Asset::MetalMaterial>(Tool::Color{1.0f, 1.0f, 1.0f}, fuzziness);
+			{
+				auto firstColor = Tool::Color{0.1f, 0.25f, 0.5f};
+				auto secondColor = Tool::Color{0.35f, 0.45f, 0.65f};
+				auto cellSize = 0.5f;
+
+				auto texture = std::make_shared<Asset::CheckerTexture>(firstColor, secondColor, cellSize);
+				material->SetAlbedoTexture(texture);
+			}
+
+			firstBookScene.AddSceneObject<Entity::Sphere>(position, radius, material);
+		}
+
+		// Add skybox
+		{
+			auto texture = std::make_shared<Asset::CubemapTexture>("Data/skybox_000.jpg");
+
+			firstBookScene.Material = std::make_shared<Asset::LambertianMaterial>(Tool::Color{1.0f, 1.0f, 1.0f});
+			firstBookScene.Material->SetAlbedoTexture(texture);
+		}
 
 		// Earth
 		{

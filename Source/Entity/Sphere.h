@@ -29,8 +29,6 @@ private:
 	Tool::Vector3f GetCurrentCenter(float time) const;
 	void TestHitResult(Tool::HitResult& hitResult, const Tool::Ray& ray, float minT, float maxT) const;
 
-	static Tool::Vector2f GetUV(const Tool::Vector3f& normal);
-
 private:
 	Tool::Vector3f m_Center;
 	float m_Radius = 1.0f;

@@ -1,5 +1,6 @@
 #include <Gfx/Util.h>
 #include <Tool/Random.h>
+#include <Tool/Math.h>
 
 namespace Gfx {
 
@@ -34,6 +35,24 @@ Tool::Vector3f Util::GetRandomVectorInUnitDisk()
 		point = (point * 2.0f) - Tool::Vector3f{1.0f, 1.0f, 0.0f};
 	}
 	return point;
+}
+
+Tool::Vector2f Util::GetSphericalUV(const Tool::Vector3f& normal)
+{
+	// phi angle is on XZ axis. Arctangent of z/x is in [-180, +180]
+	float phi = Tool::Math::ArcTan(normal.Z, normal.X);
+	// convert [-180, +180] -> [0, 1]
+	phi = (phi + 180.0f) / 360.0f;
+
+	// theta angle is vertical angle. Arctangent of y is in [-90, +90]
+	float theta = Tool::Math::ArcSin(normal.Y);
+	// convert [-90, +90] -> [0, 1]
+	theta = (theta + 90.0f) / 180.0f;
+
+	// We want the phi to rotate counter clockwise and theta to work top to bottom.
+	// ArcTan makes phi clockwise and ArcSin makes theta bottom to top. So we use
+	// (1 - angle) to convert them.
+	return Tool::Vector2f{1.0f-phi, 1.0f-theta};
 }
 
 Tool::Vector3f Util::Reflect(const Tool::Vector3f& vector, const Tool::Vector3f& normal)
