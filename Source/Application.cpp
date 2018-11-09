@@ -6,11 +6,13 @@
 
 static const std::string ArgvSelectionTag = "-rayraytest=";
 static const std::string OutputFileName = "output";
-static constexpr Tool::Vector2u OutputSize = {1600, 900};
-static constexpr size_t ScatterDepth = 15u;
-static constexpr size_t SampleCount = 4u;
+static constexpr Tool::Vector2u OutputSize = {400, 225};
+static constexpr size_t ScatterDepth = 50u;
+static constexpr size_t SampleCount = 128u;
 static constexpr size_t ThreadCount = 6u;
 static constexpr float Gamma = 2.2f;
+static constexpr float HDRExposure = 2.0f;
+static constexpr size_t BloomSize = 5u;
 
 static int GetArgvSelection(int argc, const char* argv[]);
 static void RunSelection(size_t selection);
@@ -75,8 +77,8 @@ static void RunSelection(size_t selection)
 	}
 	else
 	{
-		auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount);
-		output.Save(OutputFileName, Gamma);
+		auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount, Gamma, HDRExposure, BloomSize);
+		output.Save(OutputFileName);
 
 		delete test;
 	}
@@ -115,8 +117,8 @@ static void RunMenuLoop(const std::vector<Test::RayRayTest::Spawner>& spawners)
 			auto test = testSpawner();
 
 			Tool::ScopedTimer timer("Render completed in %time sec.\n");
-			auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount);
-			output.Save(OutputFileName, Gamma);
+			auto output = test->Run(OutputSize, ScatterDepth, SampleCount, ThreadCount, Gamma, HDRExposure, BloomSize);
+			output.Save(OutputFileName);
 
 			delete test;
 		}

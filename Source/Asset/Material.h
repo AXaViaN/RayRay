@@ -17,6 +17,7 @@ class Material
 {
 public:
 	virtual Tool::ScatterResult ScatterCheck(const Tool::Ray& ray, const Tool::HitResult& hitResult) const = 0;
+	virtual inline Tool::Color EmitColor(const Tool::Vector2f& uv, const Tool::Vector3f& position) const;
 
 	inline void SetAlbedoTexture(std::shared_ptr<Asset::Texture> albedo);
 	inline Tool::Color GetAlbedoColor(const Tool::Vector2f& uv, const Tool::Vector3f& position) const;
@@ -25,6 +26,14 @@ private:
 	std::shared_ptr<Asset::Texture> m_Albedo;
 
 };
+
+/***** IMPLEMENTATION *****/
+
+inline Tool::Color Material::EmitColor(const Tool::Vector2f& uv, const Tool::Vector3f& position) const
+{
+	// Return black by default
+	return {};
+}
 
 inline void Material::SetAlbedoTexture(std::shared_ptr<Asset::Texture> albedo)
 {

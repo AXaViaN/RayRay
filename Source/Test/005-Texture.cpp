@@ -100,6 +100,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(Texture, 005);
+REGISTER_RAYRAYTEST(Texture, 5);
 
 } // namespace Test

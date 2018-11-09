@@ -1,5 +1,7 @@
 #include <Test/RayRayTest.h>
 #include <Gfx/Renderer.h>
+#include <Gfx/PostProcess.h>
+#include <Tool/Math.h>
 #include <Utility/Texture.h>
 #include <algorithm>
 
@@ -34,7 +36,7 @@ const std::vector<RayRayTest::Spawner>& RayRayTest::GetSpawners()
 	return spawnerList;
 }
 
-Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t scatterDepth, size_t sampleCount, size_t threadCount)
+Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t scatterDepth, size_t sampleCount, size_t threadCount, float gamma, float hdrExposure, size_t bloomSize)
 {
 	float aspectRatio = outputSize.X / (float)outputSize.Y;
 
@@ -47,6 +49,18 @@ Utility::Texture RayRayTest::Run(const Tool::Vector2u& outputSize, size_t scatte
 	// Render
 	Gfx::Renderer renderer(outputSize, sampleCount, threadCount);
 	Utility::Texture renderTexture = renderer.RenderScene(scene, camera, scatterDepth);
+
+	// Post-processing
+	{
+		auto bloomScale = Tool::Math::Sqrt((outputSize.X * outputSize.Y) / 100000.0f);
+		bloomSize = static_cast<size_t>(bloomSize * bloomScale);
+
+		auto highlight = Gfx::PostProcess::GetLuminance(renderTexture);
+		highlight = Gfx::PostProcess::GaussianBlur(highlight, bloomSize);
+		renderTexture = Gfx::PostProcess::Bloom(renderTexture, highlight);
+	}
+	renderTexture = Gfx::PostProcess::HDRToneMap(renderTexture, hdrExposure);
+	renderTexture = Gfx::PostProcess::GammaCorrection(renderTexture, gamma);
 
 	return renderTexture;
 }

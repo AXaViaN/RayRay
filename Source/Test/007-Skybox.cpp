@@ -37,6 +37,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(Skybox, 007);
+REGISTER_RAYRAYTEST(Skybox, 7);
 
 } // namespace Test

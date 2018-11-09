@@ -51,6 +51,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(MotionBlur, 004);
+REGISTER_RAYRAYTEST(MotionBlur, 4);
 
 } // namespace Test

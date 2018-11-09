@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Asset\CheckerTexture.cpp" />
     <ClCompile Include="Source\Asset\CubemapTexture.cpp" />
+    <ClCompile Include="Source\Asset\DiffuseLightMaterial.cpp" />
     <ClCompile Include="Source\Asset\ImageTexture.cpp" />
     <ClCompile Include="Source\Asset\NoiseTexture.cpp" />
     <ClCompile Include="Source\Entity\BVHNode.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Source\Asset\DielectricMaterial.cpp" />
     <ClCompile Include="Source\Asset\LambertianMaterial.cpp" />
     <ClCompile Include="Source\Asset\MetalMaterial.cpp" />
+    <ClCompile Include="Source\Gfx\PostProcess.cpp" />
     <ClCompile Include="Source\Gfx\Renderer.cpp" />
     <ClCompile Include="Source\Entity\Scene.cpp" />
     <ClCompile Include="Source\Entity\Sphere.cpp" />
@@ -40,6 +42,7 @@
     <ClCompile Include="Source\Test\005-Texture.cpp" />
     <ClCompile Include="Source\Test\006-EarthScene.cpp" />
     <ClCompile Include="Source\Test\007-Skybox.cpp" />
+    <ClCompile Include="Source\Test\008-Light.cpp" />
     <ClCompile Include="Source\Test\RayRayTest.cpp" />
     <ClCompile Include="Source\Test\002-RedSphere.cpp" />
     <ClCompile Include="Source\Tool\AABB.cpp" />
@@ -51,6 +54,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Asset\CheckerTexture.h" />
     <ClInclude Include="Source\Asset\CubemapTexture.h" />
+    <ClInclude Include="Source\Asset\DiffuseLightMaterial.h" />
     <ClInclude Include="Source\Asset\ImageTexture.h" />
     <ClInclude Include="Source\Asset\NoiseTexture.h" />
     <ClInclude Include="Source\Asset\Texture.h" />
@@ -60,6 +64,7 @@
     <ClInclude Include="Source\Asset\LambertianMaterial.h" />
     <ClInclude Include="Source\Asset\Material.h" />
     <ClInclude Include="Source\Asset\MetalMaterial.h" />
+    <ClInclude Include="Source\Gfx\PostProcess.h" />
     <ClInclude Include="Source\Gfx\Renderer.h" />
     <ClInclude Include="Source\Entity\Scene.h" />
     <ClInclude Include="Source\Entity\SceneObject.h" />

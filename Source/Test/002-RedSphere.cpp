@@ -42,6 +42,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(RedSphere, 002);
+REGISTER_RAYRAYTEST(RedSphere, 2);
 
 } // namespace Test

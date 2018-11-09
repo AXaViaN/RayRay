@@ -137,16 +137,25 @@ static Tool::Color GetColor(const Entity::Scene& scene, const Entity::BVHNode& s
 						 scatterResult.ObjectColor.G * scatterColor.G,
 						 scatterResult.ObjectColor.B * scatterColor.B};
 			}
+
+			// Add emitted color
+			auto emitColor = hitResult.Object->Material->EmitColor(hitResult.UV, hitResult.Point);
+			color = {color.R + emitColor.R,
+					 color.G + emitColor.G,
+					 color.B + emitColor.B};
 		}
 
 		return color;
 	}
 
+	// Sky
 	if(scene.Material != nullptr)
 	{
-		auto uv = Tool::Vector2f{};
-		auto position = ray.GetDirection();
-		return scene.Material->GetAlbedoColor(uv, position);
+		auto hitResult = Tool::HitResult();
+		hitResult.Point = ray.GetDirection();
+
+		auto scatterResult = scene.Material->ScatterCheck(ray, hitResult);
+		return scatterResult.ObjectColor;
 	}
 	else
 	{

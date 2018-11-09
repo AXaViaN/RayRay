@@ -10,8 +10,13 @@ class Math
 public:
 	template<typename T> static inline T Abs(const T& value);
 	template<typename T> static inline T Floor(const T& value);
+	template<typename T> static inline T Ceil(const T& value);
 	template<typename T> static inline T Min(const T& value1, const T& value2);
 	template<typename T> static inline T Max(const T& value1, const T& value2);
+
+	template<typename T> static inline T Pow(const T& value1, const T& value2);
+	template<typename T> static inline T Sqrt(const T& value);
+	template<typename T> static inline T Exp(const T& value);
 
 	static inline float Pi();
 	static inline float ToRadian(float angle);
@@ -37,11 +42,15 @@ public:
 
 template<typename T> inline T Math::Abs(const T& value)
 {
-	return std::abs(value);
+	return static_cast<T>(std::abs(value));
 }
 template<typename T> inline T Math::Floor(const T& value)
 {
-	return std::floor(value);
+	return static_cast<T>(std::floor(value));
+}
+template<typename T> inline T Math::Ceil(const T& value)
+{
+	return static_cast<T>(std::ceil(value));
 }
 template<typename T> inline T Math::Min(const T& value1, const T& value2)
 {
@@ -50,6 +59,19 @@ template<typename T> inline T Math::Min(const T& value1, const T& value2)
 template<typename T> inline T Math::Max(const T& value1, const T& value2)
 {
 	return (value1 > value2) ? value1 : value2;
+}
+
+template<typename T> inline T Math::Pow(const T& value1, const T& value2)
+{
+	return static_cast<T>(std::pow(value1, value2));
+}
+template<typename T> inline T Math::Sqrt(const T& value)
+{
+	return static_cast<T>(std::sqrt(value));
+}
+template<typename T> inline T Math::Exp(const T& value)
+{
+	return static_cast<T>(std::exp(value));
 }
 
 inline float Math::Pi()

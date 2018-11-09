@@ -25,6 +25,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(FirstBookScene, 003);
+REGISTER_RAYRAYTEST(FirstBookScene, 3);
 
 } // namespace Test

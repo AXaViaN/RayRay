@@ -28,7 +28,7 @@ public:
 	static void RegisterSpawner(const Spawner& spawner);
 	static const std::vector<RayRayTest::Spawner>& GetSpawners();
 
-	Utility::Texture Run(const Tool::Vector2u& outputSize, size_t scatterDepth, size_t sampleCount, size_t threadCount);
+	Utility::Texture Run(const Tool::Vector2u& outputSize, size_t scatterDepth, size_t sampleCount, size_t threadCount, float gamma, float hdrExposure, size_t bloomSize);
 
 private:
 	virtual Entity::Scene SetupScene() = 0;

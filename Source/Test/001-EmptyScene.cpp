@@ -29,6 +29,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(EmptyScene, 001);
+REGISTER_RAYRAYTEST(EmptyScene, 1);
 
 } // namespace Test

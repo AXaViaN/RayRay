@@ -93,6 +93,6 @@ private:
 	}
 };
 
-REGISTER_RAYRAYTEST(EarthScene, 006);
+REGISTER_RAYRAYTEST(EarthScene, 6);
 
 } // namespace Test
